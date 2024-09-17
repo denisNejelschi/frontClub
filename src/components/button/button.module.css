@@ -1,0 +1,23 @@
+.btn {
+    background-color: #dca026;
+    border-color: #dca026;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    width: 7rem;
+    height: 2rem;
+    align-content: center;
+    margin-right: 0.5rem;
+}
+
+.btn:hover {
+    background-color: #c18604;
+    border-color: #c18604;
+}
+
+.btn:disabled {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    cursor: not-allowed;
+}
