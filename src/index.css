@@ -26,3 +26,9 @@ main {
     justify-content: right;
     width: 100%;
 }
+
+.product_Card_Container {
+    display: flex;
+    align-items: center;
+
+}
