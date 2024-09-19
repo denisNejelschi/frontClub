@@ -15,6 +15,7 @@ interface IInputProps {
 function Input({
   name,
   placeholder = '',
+  type = 'text',
   label,
   value = '', 
   onChange,
