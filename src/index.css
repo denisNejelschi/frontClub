@@ -26,3 +26,10 @@ main {
     justify-content: right;
     width: 100%;
 }
+
+.product_Card_Container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
