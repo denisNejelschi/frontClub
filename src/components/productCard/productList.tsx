@@ -19,6 +19,12 @@ const products = [
     description: "Для тех людей, кто всегда мечтал, однако не имел такой возможности...",
     image: "https://elitestudent.ru/wp-content/uploads/2023/06/self-study.png",
     price: 0,
+  },
+  {
+    title: "English",
+    description: "Для тех людей, кто всегда мечтал, однако не имел такой возможности...",
+    image: "https://elitestudent.ru/wp-content/uploads/2023/06/self-study.png",
+    price: 0,
   }
 ];
 
