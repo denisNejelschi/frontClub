@@ -5,11 +5,12 @@ import { store } from './app/store';
 import Auth from './components/auth/Auth';
 import { UserProvider } from './components/userContext/UserContext'; 
 import Layout from './components/layout/Layout';
-import ProductList from './components/productCard/productList';
+
 import { Footer } from './components/footer/Footer';
 import HomePage from './components/homePages/HomePage';
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
 import Product from './components/product/Product';
+import ProductList from './components/productCard/productList';
 
 
 

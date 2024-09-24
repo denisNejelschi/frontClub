@@ -5,10 +5,10 @@ export const links = [
     },
     {
       pathname: '/footer',
-      title: 'Footer'
+      title: 'Register'
     },
     {
         pathname: '/productCard',
-        title: 'ProductCard'
+        title: 'Courses'
       }
   ];

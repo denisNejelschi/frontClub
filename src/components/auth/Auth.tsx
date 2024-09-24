@@ -128,14 +128,17 @@ export default function Auth() {
           />
           {isRegistering && (
             <>
-              <Input
+              {/* <Input
                 name='confirmPassword'
                 placeholder='Подтвердите пароль'
                 type='password'
                 error={formik.errors.confirmPassword}
                 value={formik.values.confirmPassword}
                 onChange={formik.handleChange}
-              />
+              /> */}
+              {/* <div aria-live="polite" role="alert">
+            {errorMessage && <div className={styles.error}>{errorMessage}</div>}
+          </div> */}
               <Input
                 name='email'
                 placeholder='Email'
@@ -144,14 +147,14 @@ export default function Auth() {
                 value={formik.values.email}
                 onChange={formik.handleChange}
               />
-              <Input
+              {/* <Input
                 name='dob'
                 placeholder='Дата рождения (YYYY-MM-DD)'
                 type='date'
                 error={formik.errors.dob}
                 value={formik.values.dob}
                 onChange={formik.handleChange}
-              />
+              /> */}
             </>
           )}
           {isRecovering && (
