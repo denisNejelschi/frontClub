@@ -1,0 +1,90 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  border-radius: 12px;
+  background: #e0e0e0; 
+  box-shadow: 5px 5px 15px #bebebe, -5px -5px 15px #ffffff;
+  max-width: 400px;
+  margin: 20px auto 20px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: inset 5px 5px 10px #d0d0d0, inset -5px -5px 10px #ffffff;
+  font-size: 16px;
+  color: #333;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(77, 144, 254, 0.7);
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+  accent-color: #4d90fe;
+}
+
+input[type="checkbox"]:focus {
+  outline: none;
+  box-shadow: 0 0 5px #4d90fe;
+}
+
+.checkboxWrapper {
+  margin-bottom: 10px;
+}
+
+.error {
+  font-size: 12px;
+  color: #e74c3c;
+  margin-top: 5px;
+}
+
+button[type="submit"],
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #4d90fe;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+}
+
+button[type="submit"]:hover,
+button:hover {
+  background-color: #357ae8;
+}
+
+button[type="submit"]:active,
+button:active {
+  background-color: #285aeb;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.switchModeButton {
+  background-color: transparent;
+  color: #4d90fe;
+  font-size: 14px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.switchModeButton:hover {
+  text-decoration: underline;
+}

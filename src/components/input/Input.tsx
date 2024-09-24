@@ -10,6 +10,7 @@ interface IInputProps {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
   error?: string;
   id?: string;
+  disabled?: boolean;
 }
 
 function Input({
@@ -20,7 +21,8 @@ function Input({
   value = '', 
   onChange,
   error,
-  id
+  id,
+  disabled = false
 }: IInputProps) {
   const inputId = id || name; 
 
@@ -33,6 +35,7 @@ function Input({
         name={name}
         placeholder={placeholder}
         type={type}
+        disabled={disabled}
         value={value}
         onChange={onChange} />
       {error && <div className={styles.error}>{error}</div>}

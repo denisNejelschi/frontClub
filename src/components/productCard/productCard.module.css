@@ -29,3 +29,20 @@
     font-size: 1.1rem;
     font-weight: bold;
 }
+
+
+.productCard__button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .productCard__button:hover {
+    background-color: #0056b3;
+  }

@@ -1,56 +1,39 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import {Header} from "./components/header/Header.tsx";
-import {Footer} from "./components/footer/Footer.tsx";
-import Button from "./components/button/Button.tsx";
-import ProductCard from "./components/productCard/ProductCard.tsx";
+import ReactDOM from 'react-dom/client';
+import { HashRouter, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './app/store';
+import Auth from './components/auth/Auth';
+import { UserProvider } from './components/userContext/UserContext'; 
+import Layout from './components/layout/Layout';
+import ProductList from './components/productCard/productList';
+import { Footer } from './components/footer/Footer';
+import HomePage from './components/homePages/HomePage';
+import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
+import Product from './components/product/Product';
 
 
-createRoot(document.getElementById('root')!).render(
-    <StrictMode>
-        <Header/>
-        <main>
-            <div className='buttons_container'>
-                <div>
-                <Button label={'login'} onClick={function(): void {
-                        throw new Error('Function not implemented.');
-                    } } />
-                </div>
-                <div>
-                    <Button label={'registration'} onClick={function(): void {
-                        throw new Error('Function not implemented.');
-                    } } />
-                </div>
-            </div>
-            <p>Main content goes here...</p>
-            <div className='product_Card_Container'>
-                <div>
-                    <ProductCard title={'English'}
-                                 description={'Для тех людей, кто всегда мечтал, однако не имел такой ' +
-                                     'возможности раньше изучать иностранный язык, в частности английский, был разработан специальный ' +
-                                     'цикл занятий по особенной программе. Это не что иное, как курсы английского языка для начинающих, ' +
-                                     'то есть с нуля.'}
-                                 image={'https://elitestudent.ru/wp-content/uploads/2023/06/self-study.png'} price={0}/>
-                </div>
-                <div>
-                    <ProductCard title={'English'}
-                                 description={'Для тех людей, кто всегда мечтал, однако не имел такой ' +
-                                     'возможности раньше изучать иностранный язык, в частности английский, был разработан специальный ' +
-                                     'цикл занятий по особенной программе. Это не что иное, как курсы английского языка для начинающих, ' +
-                                     'то есть с нуля.'}
-                                 image={'https://elitestudent.ru/wp-content/uploads/2023/06/self-study.png'} price={0}/>
-                </div>
-                <div>
-                    <ProductCard title={'English'}
-                                 description={'Для тех людей, кто всегда мечтал, однако не имел такой ' +
-                                     'возможности раньше изучать иностранный язык, в частности английский, был разработан специальный ' +
-                                     'цикл занятий по особенной программе. Это не что иное, как курсы английского языка для начинающих, ' +
-                                     'то есть с нуля.'}
-                                 image={'https://elitestudent.ru/wp-content/uploads/2023/06/self-study.png'} price={0}/>
-                </div>
-            </div>
-        </main>
-        <Footer/>
-    </StrictMode>,
-)
+
+
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+root.render(
+<Provider store={store}>
+  <UserProvider>
+    <HashRouter>
+      <Routes>
+        <Route path='/' element={<Layout />} >
+        <Route path='/login' element={<Auth />} />
+        <Route path='/registration' element={<Auth />} />
+        <Route path='/homePage' element={<HomePage />} />
+        <Route path='/footer' element={<Footer />} />
+        <Route path='/productCard' element={<ProtectedRoute component={<ProductList />} />} />
+        <Route path='/productCard/:id' element={<ProtectedRoute component={<Product />} />} />
+        <Route path='*' element={<h1>Error 404 😵</h1>} />
+        </Route>
+      </Routes>
+    </HashRouter>
+  </UserProvider>
+
+</Provider>
+);

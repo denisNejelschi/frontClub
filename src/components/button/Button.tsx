@@ -1,31 +1,34 @@
-import React from "react";
-import styles from './button.module.css'
+import { FormEvent } from 'react';
+import styles from './button.module.css';
 
-interface ButtonProps {
-    label: string;
-    onClick: () => void;
-    disabled?: boolean;
-    className?: string;
+//добавили interface props
+// которые просил добавить ts для безопасности
+
+interface IButtonProps {
+  isGetButton?: boolean;
+  name?: string;
+  onClick?: () => void;
+  disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  onSubmit?: (e: FormEvent<HTMLButtonElement>) => void;
 }
 
-const Button: React.FC<ButtonProps> = ({
-                                           label,
-                                           onClick,
-                                           disabled = false,
-                                           className = '',
-                                       }) => {
-    const handleClick = () => {
-        onClick();
-    }
-    return (
-        <button
-            className={`${styles.btn} ${className}`}
-            onClick={handleClick}
-            disabled={disabled}
-        >
-            {label}
-        </button>
-    );
-};
+function Button({
+  name = 'undefined', isGetButton = false, onClick, onSubmit, type = 'button', disabled = false }: IButtonProps) {
+
+
+  return (
+    <button
+      type={type}
+      onSubmit={onSubmit}
+      onClick={onClick}
+      className={`${styles.button} ${isGetButton ? styles.buttonDanger : styles.buttonPrimary}`}
+      disabled={disabled}
+    >
+      {name}
+    </button>
+  );
+}
 
 export default Button;
+
