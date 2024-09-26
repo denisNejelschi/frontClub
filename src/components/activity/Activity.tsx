@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import styles from './activity.module.css';
 import buttonStyles from '../button/button.module.css';
 
-// Define the IActivity interface here
+// Define the IActivity interface here   Vasili
 interface IActivity {
   id: number;
   title: string;
