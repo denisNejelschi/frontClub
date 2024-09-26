@@ -3,12 +3,12 @@ export const links = [
       pathname: '/homePage',
       title: 'Home'
     },
+    // {
+    //   pathname: '/register',
+    //   title: 'Register'
+    // },
     {
-      pathname: '/footer',
-      title: 'Register'
-    },
-    {
-        pathname: '/productCard',
+        pathname: '/activityCard',
         title: 'Courses'
       }
   ];

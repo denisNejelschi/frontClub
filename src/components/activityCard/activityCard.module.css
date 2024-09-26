@@ -1,4 +1,4 @@
-.productCard {
+.activityCard {
     border: 0.1rem solid #131212;
     padding: 1rem;
     text-align: center;
@@ -7,31 +7,31 @@
 
 }
 
-.productImage {
+.activityImage {
     max-width: 100%;
     height: auto;
 }
 
-.productTitle {
+.activityTitle {
     margin-top: 1rem;
     font-size: 1.2rem;
     font-weight: bold;
 }
 
-.productDescription {
+.activityDescription {
     margin-top: 0.5rem;
     font-size: 0.9rem;
     color: #666;
 }
 
-.product-price {
+.activity-price {
     margin-top: 1rem;
     font-size: 1.1rem;
     font-weight: bold;
 }
 
 
-.productCard__button {
+.activityCard__button {
     background-color: #007bff;
     color: white;
     border: none;
