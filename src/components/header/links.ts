@@ -8,7 +8,7 @@ export const links = [
     //   title: 'Register'
     // },
     {
-        pathname: '/activityCard',
+        pathname: '/activityList',
         title: 'Courses'
       }
   ];

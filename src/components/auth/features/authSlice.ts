@@ -1,6 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getUserWithToken, loginUser } from './authAction';
-import { IUserData } from '../Auth';
+
+export interface IUserData {
+  id: number;
+  username: string;
+  gender: string;
+  email: string;
+  image: string;
+  firstName: string;
+  lastName: string;
+  refreshToken: string;
+  token: string;
+}
 
 
 

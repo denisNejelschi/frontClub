@@ -3,13 +3,15 @@ import Loader from '../loader/Loader';
 
 
 export default function HomePage() {
-  const { user, isLoading } = useAppSelector(store => store.user);
+  //  You don't need to check for user data anymore
+  const isLoading = useAppSelector(state => state.user.isLoading); // Assuming 'isLoading' is within the 'user' slice
 
   return (
     <div>
-      {!isLoading && !user.firstName && <h2>Пройдите авторизацию 🔐</h2>}
+      {/* Show loading indicator if needed */}
       {isLoading && <Loader />}
-      {user.firstName && <h2>Home 🏡</h2>}
+      {/* Show the home message for all users */}
+      {!isLoading && <h2>Home 🏡</h2>}
     </div>
   );
 }
