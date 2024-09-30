@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './activity.module.css';
 import buttonStyles from '../button/button.module.css';
 
@@ -7,37 +7,35 @@ import buttonStyles from '../button/button.module.css';
 interface IActivity {
   id: number;
   title: string;
-  description: string;
+  // description: string;
   image: string;
 }
 
 const Activity = () => {
-  const initialValue: IActivity = {
-    id: 0,
-    title: '',
-    description: '',
-    image: '',
-  };
-
-  const [activity, setActivity] = useState<IActivity>(initialValue);
-  const { id } = useParams();
+  const initialValue: IActivity[] = []; //  Изменяем тип начального значения на массив
+  const [activities, setActivities] = useState<IActivity[]>(initialValue); //  Изменяем тип состояния
 
   useEffect(() => {
-    fetch(`/test`)
+    fetch(`/api/activity`) 
       .then(res => res.json())
-      .then(data => setActivity(data));
-  }, [id]);
+      .then(data => setActivities(data));
+  }, []);
 
   return (
     <div className={styles.activityContainer}>
-      {activity.title && (
+      {activities.length > 0 && ( //  Проверяем, есть ли активности в массиве
         <>
-          <h1>{activity.title}</h1>
-          <p>{activity.description}</p>
-          <img width={300} src={activity.image} alt={activity.title} />
-          <Link to={'/shop-page'}>
-            <button className={buttonStyles.button}>назад</button>
-          </Link>
+          {activities.map(activity => ( //  Используем map для отображения каждой активности
+            <div key={activity.id}>
+              <h1>{activity.title}</h1>
+              <h2>{activity.image}</h2>
+              {/* <p>{activity.description}</p> */}
+              {activity.image && <img width={300} src={activity.image} alt={activity.title} />}
+              <Link to={`/activityList`}> {/* Предположим, что есть маршрут /activityList */}
+                <button className={buttonStyles.button}>More details</button>
+              </Link>
+            </div>
+          ))}
         </>
       )}
     </div>

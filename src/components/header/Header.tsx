@@ -3,8 +3,8 @@ import styles from "./header.module.css";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Link, useLocation } from "react-router-dom";
 import { logoutUser } from "../auth/features/authSlice";
-import { cleanProducts } from "../auth/reduxProducts/reduxProductsSlices";
 import { links } from "./links";
+import { cleanActivities } from "../auth/reduxActivities/reduxActivitiesSlice";
 
 export const Header: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -12,15 +12,15 @@ export const Header: React.FC = () => {
     const { user } = useAppSelector(store => store.user);
 
     const handleLogout = () => {
-        localStorage.removeItem('shop-token');
+        localStorage.removeItem('club-token');
         dispatch(logoutUser());
-        dispatch(cleanProducts());
+        dispatch(cleanActivities());
     };
 
     return (
         <header className={styles.header}>
             <div className={styles.header_container}>
-                <h1>----- Speaking Club -----</h1>
+                <h1>Conversation Club</h1>
             </div>
             <nav>
                 {user.username ? (
@@ -34,11 +34,11 @@ export const Header: React.FC = () => {
                                 {el.title}
                             </Link>
                         ))}
-                        <Link onClick={handleLogout} to='/'>Logout</Link>
+                        <Link onClick={handleLogout} to='/'>Sign out</Link>
                     </>
                 ) : (
                     <>
-                        <Link to='/login'>Login</Link>
+                        <Link to='/login'>Sign in</Link>
                     </>
                 )}
             </nav>

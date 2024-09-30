@@ -5,7 +5,6 @@ import { useAppDispatch } from '../../app/hooks';
 import Button from '../button/Button';
 import Input from '../input/Input'; 
 import { loginUser, registerUser, resetPassword } from './features/authAction';
-import { getProducts } from './reduxProducts/reduxProductsAction';
 import styles from './auth.module.css';
 import { useState } from 'react';
 import Loader from '../loader/Loader';
@@ -79,7 +78,7 @@ export default function Auth() {
           alert('Регистрация прошла успешно!');
         } else {
           await dispatch(loginUser(values)).unwrap();
-          await dispatch(getProducts()).unwrap();
+          alert('Вход прошел успешно!');
         }
         resetForm();
         navigate('/');

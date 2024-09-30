@@ -10,9 +10,6 @@ import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
 import Activity from './components/activity/Activity';
 
 
-
-
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -25,7 +22,16 @@ root.render(
         <Route path='/login' element={<Auth />} />
         <Route path='/registration' element={<Auth />} />
         <Route path='/homePage' element={<HomePage />} />
+        <Route path='/homePage/:id' element={<HomePage />} />
+        <Route path='/activityList/:id' element={<Activity />} />
+        <Route path='/activity' element={<ProtectedRoute component={<Activity />} />} />
         <Route path='/activityCard' element={<ProtectedRoute component={<Activity />} />} />
+        <Route path='/activityList' element={<ProtectedRoute component={<Activity />} />} />
+        <Route path='/activity' element={<ProtectedRoute component={<Activity />} />} />
+        <Route path='/activityList' element={<ProtectedRoute component={<Activity />} />} />
+        <Route path='/activity/:id' element={<ProtectedRoute component={<Activity />} />} />
+        <Route path='/activityCard' element={<ProtectedRoute component={<Activity />} />} />
+        <Route path='/activityList' element={<ProtectedRoute component={<Activity />} />} />
         <Route path='/activityList/:id' element={<ProtectedRoute component={<Activity />} />} />
         <Route path='*' element={<h1>Error 404 😵</h1>} />
         </Route>
