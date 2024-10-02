@@ -1,22 +1,22 @@
 import React from "react";
 import styles from "./activityCard.module.css";
 import { Link } from "react-router-dom";
-import Button from "../button/Button";
+import Button from "../button/Button"; // Импорт компонента Button
 
 interface ActivityCardProps {
   id: number;
   title: string;
-  description: string;
+  // description: string;
   image: string;
   onMoreDetails: (id: number) => void; // Передаем id для обработки в onMoreDetails
 }
 
 const ActivityCard: React.FC<ActivityCardProps> = ({
-  id,
-  title,
-  description,
-  image,
-  onMoreDetails,
+  id, // ID активности
+  title, // Заголовок активности
+  // description, // Описание активности (закомментировано)
+  image, // Изображение активности
+  onMoreDetails, // Функция для обработки "Подробнее"
 }) => {
   const handleMoreDetails = () => {
     onMoreDetails(id); // Вызываем onMoreDetails с id
@@ -26,9 +26,9 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
     <div className={styles.activityCard}>
       <img src={image} alt={title} className={styles.activityImage} />
       <h3 className={styles.activityTitle}>{title}</h3>
-      <p className={styles.activityDescription}>{description}</p>
-      <Link to={`/activity/${id}`}> {/* Изменяем путь на id */}
-        <Button name="More details" onClick={handleMoreDetails}></Button>
+      {/* <p className={styles.activityDescription}>{description}</p> */} {/* Описание закомментировано */}
+      <Link to={`/activity/${id}`}> {/* Используем id в URL */}
+        <Button name="More details" onClick={onMoreDetails}></Button>
       </Link>
     </div>
   );

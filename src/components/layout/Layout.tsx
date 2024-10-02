@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { getUserWithToken } from '../auth/features/authAction';
-import { getProducts } from '../auth/reduxProducts/reduxProductsAction';
+import { getActivities } from '../auth/reduxActivities/reduxActivitiesAction';
 import { Header } from '../header/Header';
 import styles from '../layout/layout.module.css';
 
@@ -18,7 +18,7 @@ export default function Layout() {
     if (token !== null) {
       // отправляем запрос из redux
       dispatch(getUserWithToken(token));
-      dispatch(getProducts());
+      dispatch(getActivities());
     }
   }, [dispatch]);
 

@@ -1,7 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosResponse} from 'axios';
-import { IFormValues, IUserData } from '../Auth';
+import { IUserData } from './authSlice';
 
+export interface IFormValues {
+  username: string;
+  password: string;
+  confirmPassword?: string;
+  email: string;
+  dob: string;
+}
 
 export const loginUser = createAsyncThunk<
   IUserData, 
@@ -12,7 +19,7 @@ export const loginUser = createAsyncThunk<
   async (data, thunkAPI) => {
     try {
       const response: AxiosResponse<IUserData> = await axios.post('https://dummyjson.com/user/login', data);
-      localStorage.setItem("shop-token", response.data.token);
+      localStorage.setItem("club-token", response.data.token);
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -55,7 +62,7 @@ export const registerUser = createAsyncThunk<
   async (data, thunkAPI) => {
     try {
       const response: AxiosResponse<IUserData> = await axios.post('https://dummyjson.com/user/register', data);
-      localStorage.setItem("shop-token", response.data.token); // Сохраните токен, если нужно
+      localStorage.setItem("club-token", response.data.token); // Сохраните токен, если нужно
       return response.data; // Возвращаем данные пользователя
     } catch (error) {
       if (axios.isAxiosError(error)) {
