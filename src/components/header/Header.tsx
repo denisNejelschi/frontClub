@@ -42,7 +42,9 @@ export const Header: React.FC = () => {
                     </>
                 ) : (
                     <>
+                    <div className={styles.signOut}>
                         <Link to='/login'>Sign in</Link>
+                        </div>
                     </>
                 )}
             </nav>
