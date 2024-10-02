@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-
 import { getProducts } from "./reduxProductsAction";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useEffect } from "react";
 
 
 function ReduxProduct() {

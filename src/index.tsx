@@ -26,7 +26,6 @@ root.render(
         <Route path='/registration' element={<Auth />} />
         <Route path='/homePage' element={<HomePage />} />
         <Route path='/activityCard' element={<ProtectedRoute component={<Activity />} />} />
-        <Route path='/activityList/:id' element={<ProtectedRoute component={<Activity />} />} />
         <Route path='*' element={<h1>Error 404 😵</h1>} />
         </Route>
       </Routes>

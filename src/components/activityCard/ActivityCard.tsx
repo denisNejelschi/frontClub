@@ -8,22 +8,27 @@ interface ActivityCardProps {
   title: string;
   description: string;
   image: string;
-  onMoreDetails: () => void;
+  onMoreDetails: (id: number) => void; // Передаем id для обработки в onMoreDetails
 }
 
 const ActivityCard: React.FC<ActivityCardProps> = ({
+  id,
   title,
   description,
   image,
   onMoreDetails,
 }) => {
+  const handleMoreDetails = () => {
+    onMoreDetails(id); // Вызываем onMoreDetails с id
+  };
+
   return (
     <div className={styles.activityCard}>
       <img src={image} alt={title} className={styles.activityImage} />
       <h3 className={styles.activityTitle}>{title}</h3>
       <p className={styles.activityDescription}>{description}</p>
-      <Link to={`/activity`}>
-        <Button name="More details" onClick={onMoreDetails}></Button>
+      <Link to={`/activity/${id}`}> {/* Изменяем путь на id */}
+        <Button name="More details" onClick={handleMoreDetails}></Button>
       </Link>
     </div>
   );
