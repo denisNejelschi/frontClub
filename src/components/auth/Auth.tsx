@@ -49,6 +49,7 @@ export default function Auth() {
   const [isRecovering, setIsRecovering] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -65,20 +66,21 @@ export default function Auth() {
     onSubmit: async (values: IFormValues, { resetForm }) => {
       setLoading(true);
       setErrorMessage('');
+      setSuccessMessage('');
       try {
         if (isRecovering) {
           await dispatch(resetPassword({ email: values.email! })).unwrap();
-          alert('Письмо для восстановления пароля отправлено на ваш email.');
+          setSuccessMessage('Письмо для восстановления пароля отправлено на ваш email.');
         } else if (isRegistering) {
           await dispatch(registerUser({
             username: values.username,
             password: values.password,
             email: values.email!,
           })).unwrap();
-          alert('Регистрация прошла успешно!');
+          setSuccessMessage('Регистрация прошла успешно!');
         } else {
           await dispatch(loginUser(values)).unwrap();
-          alert('Вход прошел успешно!');
+          setSuccessMessage('Вход прошел успешно!');
         }
         resetForm();
         navigate('/');
@@ -105,8 +107,9 @@ export default function Auth() {
         <form onSubmit={formik.handleSubmit} className={styles.container}>
           <div aria-live="polite" role="alert">
             {errorMessage && <div className={styles.error}>{errorMessage}</div>}
+            {successMessage && <div className={styles.success}>{successMessage}</div>}
           </div>
-          {isRecovering ? null : (
+          {!isRecovering && (
             <Input
               name='username'
               placeholder='Имя пользователя'
@@ -127,7 +130,7 @@ export default function Auth() {
           />
           {isRegistering && (
             <>
-              {/* <Input
+            {/* <Input
                 name='confirmPassword'
                 placeholder='Подтвердите пароль'
                 type='password'
@@ -165,6 +168,14 @@ export default function Auth() {
               value={formik.values.email}
               onChange={formik.handleChange}
             />
+            // {/* <Input
+            //     name='dob'
+            //     placeholder='Дата рождения (YYYY-MM-DD)'
+            //     type='date'
+            //     error={formik.errors.dob}
+            //     value={formik.values.dob}
+            //     onChange={formik.handleChange}
+            //   /> */}
           )}
           <Button type='submit' name={isRecovering ? 'Восстановить' : (isRegistering ? 'Зарегистрироваться' : 'Войти')} disabled={loading} />
         </form>
@@ -186,3 +197,4 @@ export default function Auth() {
     </div>
   );
 }
+
