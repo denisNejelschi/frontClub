@@ -38,3 +38,20 @@ nav a:hover {
   background-color: rgba(255, 255, 255, 0.4); /* выделение активной ссылки */
   font-weight: bold;
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px; /* можно настроить ширину */
+  padding: 0 20px;
+}
+
+.navLinks {
+  display: flex;
+  gap: 15px; /* расстояние между ссылками */
+}
+
+.signOut {
+  margin-left: auto; /* двигает Sign out вправо */
+}

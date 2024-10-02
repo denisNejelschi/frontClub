@@ -22,9 +22,10 @@ export const Header: React.FC = () => {
             <div className={styles.header_container}>
                 <h1>Conversation Club</h1>
             </div>
-            <nav>
+            <nav className={styles.navbar}>
                 {user.username ? (
                     <>
+                    <div className={styles.navLinks}>
                         {links.map((el, index) => (
                             <Link
                                 key={index}
@@ -34,7 +35,10 @@ export const Header: React.FC = () => {
                                 {el.title}
                             </Link>
                         ))}
+                        </div>
+                        <div className={styles.signOut}>
                         <Link onClick={handleLogout} to='/'>Sign out</Link>
+                        </div>
                     </>
                 ) : (
                     <>
