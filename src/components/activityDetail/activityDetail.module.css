@@ -1,0 +1,36 @@
+.activityDetailContainer {
+    max-width: 600px; /* Установка максимальной ширины */
+    margin: 20px auto; /* Центрирование контейнера */
+    padding: 20px; /* Отступ внутри контейнера */
+    background-color: #f9f9f9; /* Цвет фона */
+    border: 1px solid #ddd; /* Граница */
+    border-radius: 8px; /* Скругление углов */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для 3D-эффекта */
+    overflow: auto; /* Позволяет содержимому выходить за пределы, если оно слишком велико */
+}
+
+.activityDetailTitle {
+    font-size: 2rem; /* Размер шрифта заголовка */
+    margin-bottom: 10px; /* Отступ снизу */
+    color: #333; /* Цвет текста */
+}
+
+.activityDetailImage {
+    max-width: 100%; /* Изображение не должно превышать ширину контейнера */
+    height: auto; /* Автоматическая высота для сохранения пропорций */
+    border-radius: 8px; /* Скругление углов изображения */
+    margin-bottom: 15px; /* Отступ снизу изображения */
+}
+
+.activityDetailAddress,
+.activityDetailDate {
+    font-size: 1.1rem; /* Размер шрифта для адреса и даты */
+    color: #666; /* Цвет текста */
+    margin-bottom: 10px; /* Отступ снизу */
+}
+
+.activityDetailDescription {
+    font-size: 1rem; /* Размер шрифта описания */
+    line-height: 1.6; /* Высота строки для лучшей читаемости */
+    color: #444; /* Цвет текста */
+}
