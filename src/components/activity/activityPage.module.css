@@ -1,0 +1,17 @@
+.activityPageContainer {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formContainer {
+  margin-bottom: 20px;
+}
+
+.activityCardContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+}

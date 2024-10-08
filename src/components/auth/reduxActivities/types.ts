@@ -1,6 +1,8 @@
 export interface IActivity {
     id: number;
     title: string;
-    // description: string;
+    adress: string;
+    dateTime: Date
     image: string;   
+    description: string;
 };

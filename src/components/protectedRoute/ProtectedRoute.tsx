@@ -11,5 +11,5 @@ export default function ProtectedRoute({ component }: IPops) {
     if (user.username) {
         return  component
     }
-    return ( <Navigate to="../login"/>)
+    return ( <Navigate to="/login"/>)
 }

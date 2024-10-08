@@ -1,0 +1,71 @@
+.activityListContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Автоматически создаём колонки, минимум 300px на колонку */
+  gap: 20px; /* Задаем расстояние между карточками */
+  width: 100%;
+  margin: 0 auto;
+}
+
+.activityList {
+  background-color: #fff; 
+  border: 1px solid #ccc; 
+  border-radius: 8px; 
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.activityImage {
+  max-width: 100%;
+  height: auto;
+}
+
+.activityTitle {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.activityDescription {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.activityList button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.activityList button:hover {
+  background-color: #0056b3;
+}
+
+.addButtonContainer {
+  margin-bottom: 20px;
+}
+
+.addButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: #45a049;
+}
+
+@media (max-width: 600px) {
+  .activityListContainer {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* При маленьком экране уменьшаем минимальный размер карточек */
+  }
+}

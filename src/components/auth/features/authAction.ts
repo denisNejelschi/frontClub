@@ -1,72 +1,76 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios, { AxiosResponse} from 'axios';
-import { IUserData } from './authSlice';
-
-export interface IFormValues {
-  username: string;
-  password: string;
-  confirmPassword?: string;
-  email: string;
-  dob: string;
-}
+import axios, { AxiosResponse } from 'axios';
+import { ITokenDto, IUserData } from './authSlice';
+import { ILoginFormValues } from '../Login';
 
 export const loginUser = createAsyncThunk<
-  IUserData, 
-  IFormValues, 
-  { rejectValue: string } 
+ITokenDto, 
+  ILoginFormValues, 
+  { rejectValue: string }
 >(
-  'authAction',
-  async (data, thunkAPI) => {
+  'auth/login',
+  async ({ username, password }, thunkAPI) => {
     try {
-      const response: AxiosResponse<IUserData> = await axios.post('https://dummyjson.com/user/login', data);
-      localStorage.setItem("club-token", response.data.token);
+      const response: AxiosResponse<ITokenDto> = await axios.post('/api/auth/login', {
+        username,
+        password,
+      }, {
+        withCredentials: true 
+      });
+      localStorage.setItem('token', response.data.accessToken);
+      console.log('Login successful:', response.data);
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        return thunkAPI.rejectWithValue(error.message);
+        console.error('Error message:', error.message); 
+        console.error('Response data:', error.response?.data);
+        return thunkAPI.rejectWithValue(error.response?.data || error.message); 
       }
       return thunkAPI.rejectWithValue('An unexpected error occurred');
     }
   }
 );
 
+
+
 export const getUserWithToken = createAsyncThunk<
   IUserData,
-  string,
-  { rejectValue: string }
+  void
 >(
-  'loginToken',
-  async (token, thunkAPI) => {
-    try {
-      const response: AxiosResponse<IUserData> = await axios.get('https://dummyjson.com/user/me', {
+  'auth/me',
+  async () => {
+    // try {
+      const token = localStorage.getItem('token');
+      const response: AxiosResponse<IUserData> = await axios.get('/api/auth/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
       return response.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        return thunkAPI.rejectWithValue(error.message);
-      }
-      return thunkAPI.rejectWithValue('An unexpected error occurred');
-    }
+    // } catch (error) {
+      // if (axios.isAxiosError(error)) {
+      //   return thunkAPI.rejectWithValue(error.message);
+      // }
+      // return thunkAPI.rejectWithValue('An unexpected error occurred');
+    // }
   }
 );
 
 export const registerUser = createAsyncThunk<
-  IUserData,  // Возвращаемый тип
-  { username: string; password: string; email: string }, // Тип входных данных
-  { rejectValue: string } // Тип для обработки ошибок
+  IUserData, 
+  { username: string; password: string; email: string }, 
+  { rejectValue: string }
 >(
-  'auth/register', // Уникальный ключ действия
+  'auth/register', 
   async (data, thunkAPI) => {
     try {
-      const response: AxiosResponse<IUserData> = await axios.post('https://dummyjson.com/user/register', data);
-      localStorage.setItem("club-token", response.data.token); // Сохраните токен, если нужно
-      return response.data; // Возвращаем данные пользователя
+      const response: AxiosResponse<IUserData> = await axios.post('http://localhost:8080/register', data);
+      localStorage.setItem("shop-token", response.data.token);
+      return response.data; 
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        return thunkAPI.rejectWithValue(error.message);
+        console.error('Error message:', error.message);
+        return thunkAPI.rejectWithValue(error.response?.data || error.message);
       }
       return thunkAPI.rejectWithValue('An unexpected error occurred');
     }
@@ -81,8 +85,7 @@ export const resetPassword = createAsyncThunk<
   'auth/resetPassword',
   async ({ email }, thunkAPI) => {
     try {
-      await axios.post('https://dummyjson.com/user/reset-password', { email });
-      // Можно добавить логику для уведомления о том, что письмо отправлено
+      await axios.post('http://localhost:8080/user/reset-password', { email });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return thunkAPI.rejectWithValue(error.message);
@@ -91,4 +94,3 @@ export const resetPassword = createAsyncThunk<
     }
   }
 );
-

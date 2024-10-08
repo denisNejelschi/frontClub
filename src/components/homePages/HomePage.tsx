@@ -1,17 +1,25 @@
+import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import Loader from '../loader/Loader';
 
-
 export default function HomePage() {
-  //  You don't need to check for user data anymore
-  const isLoading = useAppSelector(state => state.user.isLoading); // Assuming 'isLoading' is within the 'user' slice
+  const isLoading = useAppSelector(state => state.user.isLoading);
+  const [showLoader, setShowLoader] = useState(true);
+
+  useEffect(() => {
+    setShowLoader(true);
+    if (isLoading) {
+      const timer = setTimeout(() => setShowLoader(false), 100);
+      return () => clearTimeout(timer);
+    } else {
+      setShowLoader(false);
+    }
+  }, [isLoading]);
 
   return (
     <div>
-      {/* Show loading indicator if needed */}
-      {isLoading && <Loader />}
-      {/* Show the home message for all users */}
-      {!isLoading && <h2>Home 🏡</h2>}
+      {showLoader && <Loader />}
+      <h2>Home 🏡</h2>
     </div>
   );
 }

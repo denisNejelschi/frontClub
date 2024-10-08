@@ -1,14 +1,26 @@
-export const links = [
+export interface ILink {
+  pathname: string;
+  title: string;
+}
+
+export const links = (isAuthenticated: boolean): ILink[] => {
+  const baseLinks: ILink[] = [
     {
-      pathname: '/homePage',
-      title: 'Home'
+      pathname: '/',
+      title: 'Home',
     },
-    // {
-    //   pathname: '/register',
-    //   title: 'Register'
-    // },
     {
-        pathname: '/activityList',
-        title: 'Courses'
-      }
+      pathname: '/activityList',
+      title: 'Courses',
+    },
   ];
+
+  if (isAuthenticated) {
+    baseLinks.push({
+      pathname: '/school',
+      title: 'School',
+    });
+  }
+
+  return baseLinks;
+};

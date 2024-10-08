@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 
 
 function ReduxActivity() {
-    const {activities, isLoading, error} = useAppSelector(store => store.reduxActivities)
+    const {activities, isLoading, error} = useAppSelector(store => store.reduxActivities);
 
     const dispatch = useAppDispatch();
 

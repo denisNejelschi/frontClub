@@ -1,43 +1,50 @@
-import ReactDOM from 'react-dom/client';
-import { HashRouter, Route, Routes } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from './app/store';
-import Auth from './components/auth/Auth';
-import { UserProvider } from './components/userContext/UserContext'; 
-import Layout from './components/layout/Layout';
-import HomePage from './components/homePages/HomePage';
-import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
-import Activity from './components/activity/Activity';
-
+import ReactDOM from "react-dom/client";
+import { HashRouter, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
+import { UserProvider } from "./components/userContext/UserContext";
+import Layout from "./components/layout/Layout";
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
+import ActivityList from "./components/activityList/ActivityList";
+import HomePage from "./components/homePages/HomePage";
+import School from "./components/school/school";
+import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
+import AddActivityForm from "./components/addActivitiesForm/AddActivitiesForm";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
-root.render(
-<Provider store={store}>
-  <UserProvider>
-    <HashRouter>
-      <Routes>
-        <Route path='/' element={<Layout />} >
-        <Route path='/login' element={<Auth />} />
-        <Route path='/registration' element={<Auth />} />
-        <Route path='/homePage' element={<HomePage />} />
-        <Route path='/homePage/:id' element={<HomePage />} />
-        <Route path='/activityList/:id' element={<Activity />} />
-        <Route path='/activity' element={<ProtectedRoute component={<Activity />} />} />
-        <Route path='/activityCard' element={<ProtectedRoute component={<Activity />} />} />
-        <Route path='/activityList' element={<ProtectedRoute component={<Activity />} />} />
-        <Route path='/activity' element={<ProtectedRoute component={<Activity />} />} />
-        <Route path='/activityList' element={<ProtectedRoute component={<Activity />} />} />
-        <Route path='/activity/:id' element={<ProtectedRoute component={<Activity />} />} />
-        <Route path='/activityCard' element={<ProtectedRoute component={<Activity />} />} />
-        <Route path='/activityList' element={<ProtectedRoute component={<Activity />} />} />
-        <Route path='/activityList/:id' element={<ProtectedRoute component={<Activity />} />} />
-        <Route path='*' element={<h1>Error 404 😵</h1>} />
-        </Route>
-      </Routes>
-    </HashRouter>
-  </UserProvider>
 
-</Provider>
+root.render(
+  <Provider store={store}>
+    <UserProvider>
+      <HashRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route path="/homePage" element={<HomePage />} />
+            <Route path="/activityList" element={<ActivityList />} />
+            <Route
+              path="/activityList/addActivity"
+              element={
+                <AddActivityForm
+                  onSuccess={function (): void {
+                    throw new Error("Function not implemented.");
+                  }}
+                />
+              }
+            />
+            <Route
+              path="/school"
+              element={<ProtectedRoute component={<School />} />}
+            />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="*" element={<h1>Error 404 😵</h1>} />
+          </Route>
+        </Routes>
+      </HashRouter>
+    </UserProvider>
+  </Provider>
 );
