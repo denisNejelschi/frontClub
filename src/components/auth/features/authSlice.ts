@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getUserWithToken, loginUser } from './authAction';
+import { createSlice } from "@reduxjs/toolkit";
+import { getUserWithToken, loginUser } from "./authAction";
 
 export interface IUserData {
   id: number;
@@ -9,62 +9,64 @@ export interface IUserData {
   token: string;
 }
 
+export interface IUser {
+  id: number;
+  username: string;
+  email: string;
+  roles: string[];
+  active: true;
+}
+
 export interface ITokenDto {
   refreshToken: string;
   accessToken: string;
 }
 
 interface IUserState {
-  user: IUserData;
+  user: IUser|undefined;
   isLoading: boolean;
   error: string;
   isAuthenticated: boolean;
 }
 
-const initialUser: IUserData = {
-  id: 0,
-  username: '',
-  email: '',
-  refreshToken: '',
-  token: '',
-};
-
 const initialState: IUserState = {
-  user: initialUser,
+  user: undefined,
   isLoading: false,
-  error: '',
+  error: "",
   isAuthenticated: false,
 };
 
 export const authSlice = createSlice({
-  name: 'authSlice',
+  name: "authSlice",
   initialState,
   reducers: {
     logoutUser: (state) => {
-      state.user = initialUser;
+      state.user = undefined;
+      localStorage.removeItem("token");
       state.isAuthenticated = false;
-      state.error = ''; // Сброс ошибки при выходе
+      state.error = "";
     },
   },
-  
+
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
-        state.error = ''; 
+        state.error = "";
       })
       .addCase(loginUser.fulfilled, (state) => {
         state.isLoading = false;
+        state.isAuthenticated = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.user = initialUser;
+        state.user = undefined;
         state.error = action.payload as string;
         state.isAuthenticated = false;
       })
       .addCase(getUserWithToken.pending, (state) => {
         state.isLoading = true;
-        state.error = '';
+        state.error = "";
       })
       .addCase(getUserWithToken.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -73,7 +75,7 @@ export const authSlice = createSlice({
       })
       .addCase(getUserWithToken.rejected, (state, action) => {
         state.isLoading = false;
-        state.user = initialUser; 
+        state.user = undefined;
         state.error = action.payload as string;
         state.isAuthenticated = false;
       });

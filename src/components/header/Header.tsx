@@ -11,11 +11,10 @@ export const Header: React.FC = () => {
     const location = useLocation();
 
     const { user } = useAppSelector(store => store.user);
-    const isAuthenticated = Boolean(user.username); 
+    const isAuthenticated = Boolean(user?.username); 
     
     const handleLogout = (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
-        localStorage.removeItem('club-token');
         dispatch(logoutUser());
         dispatch(cleanActivities());
         window.location.href = '/'; 

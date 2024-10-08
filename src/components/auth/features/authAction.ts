@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosResponse } from 'axios';
-import { ITokenDto, IUserData } from './authSlice';
+import { ITokenDto, IUser, IUserData } from './authSlice';
 import { ILoginFormValues } from '../Login';
 
 export const loginUser = createAsyncThunk<
@@ -34,14 +34,14 @@ ITokenDto,
 
 
 export const getUserWithToken = createAsyncThunk<
-  IUserData,
+  IUser,
   void
 >(
   'auth/me',
   async () => {
     // try {
       const token = localStorage.getItem('token');
-      const response: AxiosResponse<IUserData> = await axios.get('/api/auth/me', {
+      const response: AxiosResponse<IUser> = await axios.get('/api/auth/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -64,8 +64,7 @@ export const registerUser = createAsyncThunk<
   'auth/register', 
   async (data, thunkAPI) => {
     try {
-      const response: AxiosResponse<IUserData> = await axios.post('http://localhost:8080/register', data);
-      localStorage.setItem("shop-token", response.data.token);
+      const response: AxiosResponse<IUserData> = await axios.post('/api/register', data);
       return response.data; 
     } catch (error) {
       if (axios.isAxiosError(error)) {
