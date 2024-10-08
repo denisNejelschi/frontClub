@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styles from "./activityList.module.css";
 import buttonStyles from "../button/button.module.css";
 import Loader from '../loader/Loader';
+import SearchBar from '../searchBar/SearchBar'; // Импортируем новый компонент
 
 interface IActivity {
   id: number;
@@ -38,7 +39,6 @@ const ActivityList: React.FC = () => {
     }
   };
 
-  // Оберните filterActivities в useCallback
   const filterActivities = useCallback((term: string) => {
     const filtered = activities.filter(activity =>
       activity.title.toLowerCase().includes(term.toLowerCase()) ||
@@ -46,11 +46,11 @@ const ActivityList: React.FC = () => {
       activity.address.toLowerCase().includes(term.toLowerCase())
     );
     setFilteredActivities(filtered);
-  }, [activities]); // добавьте activities как зависимость
+  }, [activities]);
 
   useEffect(() => {
     filterActivities(searchTerm);
-  }, [searchTerm, filterActivities]); // добавьте filterActivities как зависимость
+  }, [searchTerm, filterActivities]);
 
   if (loading) return <Loader />;
   if (error) return <div className={styles.error}>{error}</div>;
@@ -61,16 +61,9 @@ const ActivityList: React.FC = () => {
         <h2 className={styles.pageTitle}>Активности</h2>
         <Link to="addActivity" className={`${buttonStyles.button} ${styles.addButton}`}>Добавить активность</Link>
       </div>
-      
-      <div className={styles.searchContainer}>
-        <input 
-          type="text" 
-          placeholder="Поиск активностей..." 
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className={styles.searchInput}
-        />
-      </div>
+
+      {/* Используем компонент SearchBar */}
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
       <div className={styles.activityListContainer}>
         {filteredActivities.length > 0 ? (

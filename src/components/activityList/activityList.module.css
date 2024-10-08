@@ -95,23 +95,3 @@
   background-color: #45a049;
   transform: scale(1.05);
 }
-
-.searchContainer {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.searchInput {
-  padding: 10px 15px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  width: 100%;
-  max-width: 400px;
-  transition: border-color 0.3s ease;
-}
-
-.searchInput:focus {
-  border-color: #007bff;
-  outline: none;
-}
