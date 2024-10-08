@@ -4,87 +4,81 @@ import { getUserWithToken, loginUser } from './authAction';
 export interface IUserData {
   id: number;
   username: string;
-  gender: string;
   email: string;
-  image: string;
-  firstName: string;
-  lastName: string;
   refreshToken: string;
   token: string;
 }
 
-
-
-// типизируем объект, который мы положим в store
-// в нем будут данные с сервера + переключатель лоадера и сообщение из ошибки
-interface IUserState {
-  user: IUserData
-  isLoading: boolean
-  error: string
+export interface ITokenDto {
+  refreshToken: string;
+  accessToken: string;
 }
 
+interface IUserState {
+  user: IUserData;
+  isLoading: boolean;
+  error: string;
+  isAuthenticated: boolean;
+}
 
-// создаем начальное значение для данных пользователя
-// этот шаблон заменится на реальные данные после успешного запроса
-// нужен чтобы ts не ругался
 const initialUser: IUserData = {
   id: 0,
   username: '',
-  gender: '',
   email: '',
-  image: '',
-  firstName: '',
-  lastName: '',
   refreshToken: '',
-  token: ''
-}
+  token: '',
+};
 
-// создаем объект-начальное значение
 const initialState: IUserState = {
   user: initialUser,
   isLoading: false,
   error: '',
+  isAuthenticated: false,
 };
 
 export const authSlice = createSlice({
   name: 'authSlice',
   initialState,
-  // используется для синхронных операций со store в redux
   reducers: {
-    // придумываем ключ-имя для action
-    // по ключу стрелочная функция с описанием операции над данными в state
     logoutUser: (state) => {
-      state.user = initialUser
-    }
+      state.user = initialUser;
+      state.isAuthenticated = false;
+      state.error = ''; // Сброс ошибки при выходе
+    },
   },
+  
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
+        state.error = ''; 
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.user = action.payload;
+      .addCase(loginUser.fulfilled, (state) => {
+        state.isLoading = false;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.isLoading = false
-        state.user = initialUser
-        state.error = action.payload as string
-      })
-      // в случае вызова getUserWithToken() к нам приходят данные о юзере
-      // мы записываем их  в тот же стейт
-      .addCase(getUserWithToken.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.user = action.payload;
+        state.isLoading = false;
+        state.user = initialUser;
+        state.error = action.payload as string;
+        state.isAuthenticated = false;
       })
       .addCase(getUserWithToken.pending, (state) => {
         state.isLoading = true;
+        state.error = '';
       })
-
+      .addCase(getUserWithToken.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+      })
+      .addCase(getUserWithToken.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = initialUser; 
+        state.error = action.payload as string;
+        state.isAuthenticated = false;
+      });
   },
 });
 
 export default authSlice;
-
-// экспорт синхронных actions из нашего slice
-export const { logoutUser } = authSlice.actions
+export const { logoutUser } = authSlice.actions;
