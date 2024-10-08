@@ -39,23 +39,26 @@ const ActivityList: React.FC = () => {
   if (error) return <div className={styles.error}>{error}</div>;
 
   return (
-    <div className={styles.activityListContainer}>
-      <div className={styles.addButtonContainer}>
-        <Link to="addActivity" className={`${buttonStyles.button} ${styles.addButton}`}>Добавить</Link>
+    <>
+      <div className={styles.headerContainer}>
+        <h2 className={styles.pageTitle}>Активности</h2>
+        <Link to="addActivity" className={`${buttonStyles.button} ${styles.addButton}`}>Добавить активность</Link>
       </div>
-      {activities.map((activity) => (
-        <div key={activity.id} className={styles.activityList}>
-          <img src={activity.image} alt={activity.title} className={styles.activityImage} />
-          <h3 className={styles.activityTitle}>{activity.title}</h3>
-          <p className={styles.activityAddress}>{activity.address}</p>
-          <p className={styles.activityStartDate}>Начало: {activity.startDate}</p>
-          <p className={styles.activityDescription}>{activity.description}</p>
-          <button className={buttonStyles.button} aria-label={`Подробнее о ${activity.title}`}>
-            Подробнее
-          </button>
-        </div>
-      ))}
-    </div>
+      <div className={styles.activityListContainer}>
+        {activities.map((activity) => (
+          <div key={activity.id} className={styles.activityList}>
+            <img src={activity.image} alt={activity.title} className={styles.activityImage} />
+            <h3 className={styles.activityTitle}>{activity.title}</h3>
+            <p className={styles.activityAddress}>{activity.address}</p>
+            <p className={styles.activityStartDate}>Начало: {activity.startDate}</p>
+            <p className={styles.activityDescription}>{activity.description}</p>
+            <button className={buttonStyles.button} aria-label={`Подробнее о ${activity.title}`}>
+              Подробнее
+            </button>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 .activityListContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Автоматически создаём колонки, минимум 300px на колонку */
-  gap: 20px; /* Задаем расстояние между карточками */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+  gap: 20px; 
   width: 100%;
   margin: 0 auto;
 }
@@ -42,13 +42,17 @@
   font-size: 16px;
   transition: background-color 0.3s ease;
 }
-
-.activityList button:hover {
-  background-color: #0056b3;
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.addButtonContainer {
-  margin-bottom: 20px;
+.pageTitle {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
 }
 
 .addButton {
@@ -58,14 +62,9 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .addButton:hover {
-  background-color: #45a049;
-}
-
-@media (max-width: 600px) {
-  .activityListContainer {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* При маленьком экране уменьшаем минимальный размер карточек */
-  }
+  background-color: #3a83a0;
 }
