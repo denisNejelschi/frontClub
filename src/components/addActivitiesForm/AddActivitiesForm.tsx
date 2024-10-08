@@ -10,7 +10,8 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
   const [title, setTitle] = useState<string>('');
   const [address, setAddress] = useState<string>('');
   const [startDate, setStartDate] = useState<string>('');
-  const [image, setImage] = useState<string>('');
+  const [image, setImage] = useState<File | null>(null); // Изменили тип на File для загрузки файла
+  const [imageUrl, setImageUrl] = useState<string>('');  // Для загрузки по URL
   const [description, setDescription] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -18,16 +19,23 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newActivity = {
-      title,
-      address,
-      startDate,
-      image,
-      description,
-    };
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('address', address);
+    formData.append('startDate', startDate);
+    formData.append('description', description);
+
+    if (image) {
+      formData.append('image', image); 
+    } else if (imageUrl) {
+      formData.append('imageUrl', imageUrl);
+    }
 
     try {
-      const response = await axios.post('/api/activity', newActivity);
+      const response = await axios.post('/api/activity', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
       if (response.status === 201) {
         setSuccessMessage('Мероприятие успешно добавлено!');
         clearForm();
@@ -42,11 +50,18 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+
   const clearForm = () => {
     setTitle('');
     setAddress('');
     setStartDate('');
-    setImage('');
+    setImage(null);
+    setImageUrl('');
     setDescription('');
   };
 
@@ -78,10 +93,14 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
         />
         <input
           type="text"
-          placeholder="URL изображения"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-          required
+          placeholder="URL изображения (необязательно)"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+        />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
         />
         <textarea
           placeholder="Описание"
