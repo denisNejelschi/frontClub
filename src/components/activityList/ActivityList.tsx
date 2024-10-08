@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom'; 
 import styles from "./activityList.module.css";
@@ -16,8 +16,10 @@ interface IActivity {
 
 const ActivityList: React.FC = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
+  const [filteredActivities, setFilteredActivities] = useState<IActivity[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     fetchActivities();
@@ -27,6 +29,7 @@ const ActivityList: React.FC = () => {
     try {
       const response = await axios.get("api/activity");
       setActivities(response.data);
+      setFilteredActivities(response.data);
     } catch (error) {
       console.error("Error fetching activities:", error);
       setError("Не удалось загрузить активности. Попробуйте позже.");
@@ -34,6 +37,20 @@ const ActivityList: React.FC = () => {
       setLoading(false);
     }
   };
+
+  // Оберните filterActivities в useCallback
+  const filterActivities = useCallback((term: string) => {
+    const filtered = activities.filter(activity =>
+      activity.title.toLowerCase().includes(term.toLowerCase()) ||
+      activity.description.toLowerCase().includes(term.toLowerCase()) ||
+      activity.address.toLowerCase().includes(term.toLowerCase())
+    );
+    setFilteredActivities(filtered);
+  }, [activities]); // добавьте activities как зависимость
+
+  useEffect(() => {
+    filterActivities(searchTerm);
+  }, [searchTerm, filterActivities]); // добавьте filterActivities как зависимость
 
   if (loading) return <Loader />;
   if (error) return <div className={styles.error}>{error}</div>;
@@ -44,19 +61,34 @@ const ActivityList: React.FC = () => {
         <h2 className={styles.pageTitle}>Активности</h2>
         <Link to="addActivity" className={`${buttonStyles.button} ${styles.addButton}`}>Добавить активность</Link>
       </div>
+      
+      <div className={styles.searchContainer}>
+        <input 
+          type="text" 
+          placeholder="Поиск активностей..." 
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className={styles.searchInput}
+        />
+      </div>
+
       <div className={styles.activityListContainer}>
-        {activities.map((activity) => (
-          <div key={activity.id} className={styles.activityList}>
-            <img src={activity.image} alt={activity.title} className={styles.activityImage} />
-            <h3 className={styles.activityTitle}>{activity.title}</h3>
-            <p className={styles.activityAddress}>{activity.address}</p>
-            <p className={styles.activityStartDate}>Начало: {activity.startDate}</p>
-            <p className={styles.activityDescription}>{activity.description}</p>
-            <button className={buttonStyles.button} aria-label={`Подробнее о ${activity.title}`}>
-              Подробнее
-            </button>
-          </div>
-        ))}
+        {filteredActivities.length > 0 ? (
+          filteredActivities.map((activity) => (
+            <div key={activity.id} className={styles.activityList}>
+              <img src={activity.image} alt={activity.title} className={styles.activityImage} />
+              <h3 className={styles.activityTitle}>{activity.title}</h3>
+              <p className={styles.activityAddress}>{activity.address}</p>
+              <p className={styles.activityStartDate}>Начало: {activity.startDate}</p>
+              <p className={styles.activityDescription}>{activity.description}</p>
+              <button className={buttonStyles.button} aria-label={`Подробнее о ${activity.title}`}>
+                Подробнее
+              </button>
+            </div>
+          ))
+        ) : (
+          <div className={styles.noResults}>Нет активностей, соответствующих запросу.</div>
+        )}
       </div>
     </>
   );

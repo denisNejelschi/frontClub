@@ -1,47 +1,72 @@
 .activityListContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-  gap: 20px; 
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
   width: 100%;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .activityList {
-  background-color: #fff; 
-  border: 1px solid #ccc; 
-  border-radius: 8px; 
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   padding: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.activityList:hover {
+  transform: translateY(-5px); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .activityImage {
   max-width: 100%;
   height: auto;
+  border-radius: 5px;
 }
 
 .activityTitle {
   margin-top: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: bold;
+  color: #333;
+  text-align: center;
 }
 
 .activityDescription {
   margin-top: 0.5rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: #666;
+  line-height: 1.4;
+}
+
+.activityAddress, .activityStartDate {
+  font-size: 0.85rem;
+  color: #999;
+  margin-top: 0.25rem;
 }
 
 .activityList button {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 16px;
   cursor: pointer;
   margin-top: 10px;
   border-radius: 4px;
   font-size: 16px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
+  text-transform: uppercase;
 }
+
+.activityList button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
 .headerContainer {
   display: flex;
   justify-content: space-between;
@@ -63,8 +88,30 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .addButton:hover {
-  background-color: #3a83a0;
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.searchContainer {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.searchInput {
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-width: 400px;
+  transition: border-color 0.3s ease;
+}
+
+.searchInput:focus {
+  border-color: #007bff;
+  outline: none;
 }
