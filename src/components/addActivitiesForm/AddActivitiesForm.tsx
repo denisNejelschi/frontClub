@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import style from "./formAddActivities.module.css";
-import { useNavigate } from "react-router-dom"; // For redirection
+import { useNavigate } from "react-router-dom";
 
 interface AddActivityFormProps {
   onSuccess: () => void;
-  isAuthenticated: boolean; // Add this prop to track authentication
 }
 
-const AddActivityForm: React.FC<AddActivityFormProps> = ({
-  onSuccess,
-  isAuthenticated, // Receive authentication status as prop
-}) => {
+const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
   const [title, setTitle] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [startDate, setStartDate] = useState<string>("");
@@ -20,21 +16,22 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({
   const [description, setDescription] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
+  // Check if user is authenticated
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login"); 
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsAuthenticated(true); // User is authenticated
+    } else {
+      setIsAuthenticated(false); // User is not authenticated
     }
-  }, [isAuthenticated, navigate]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!isAuthenticated) {
-      setErrorMessage("Пожалуйста, войдите в систему, чтобы добавить мероприятие.");
-      return;
-    }
 
     const formData = new FormData();
     formData.append("title", title);
@@ -50,7 +47,7 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({
 
     try {
       const response = await axios.post("api/activity", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data", "Authorization": `Bearer ${localStorage.getItem('token')}` },
       });
       if (response.status === 201) {
         setSuccessMessage("Мероприятие успешно добавлено!");
@@ -83,6 +80,21 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({
     setImageUrl("");
     setDescription("");
   };
+
+  const handleLoginRedirect = () => {
+    navigate("/login");
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className={style.formContainer}>
+        <p className={style.errorMessage}>Пожалуйста, войдите, чтобы добавить мероприятие.</p>
+        <button onClick={handleLoginRedirect} className={style.loginButton}>
+          Войти
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className={style.formContainer}>
