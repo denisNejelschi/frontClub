@@ -13,7 +13,7 @@ const ActivityPage: React.FC = () => {
   return (
     <div className={styles.activityPageContainer}>
       <AddActivityForm onSuccess={handleActivityAdded} />
-      <ActivityList key={reload.toString()} />
+      <ActivityList key={reload.toString()} activities={[]} />
     </div>
   );
 };
