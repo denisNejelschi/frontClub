@@ -10,6 +10,7 @@ export interface IUserData {
 }
 
 export interface ITokenDto {
+  [x: string]: string;
   refreshToken: string;
   accessToken: string;
 }
