@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import style from "./formAddActivities.module.css";
+import { useNavigate } from "react-router-dom"; // For redirection
 
 interface AddActivityFormProps {
   onSuccess: () => void;
+  isAuthenticated: boolean; // Add this prop to track authentication
 }
 
-const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
+const AddActivityForm: React.FC<AddActivityFormProps> = ({
+  onSuccess,
+  isAuthenticated, // Receive authentication status as prop
+}) => {
   const [title, setTitle] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [startDate, setStartDate] = useState<string>("");
@@ -16,8 +21,20 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+  const navigate = useNavigate(); 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login"); 
+    }
+  }, [isAuthenticated, navigate]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!isAuthenticated) {
+      setErrorMessage("Пожалуйста, войдите в систему, чтобы добавить мероприятие.");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("title", title);
@@ -30,6 +47,7 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
     } else if (imageUrl) {
       formData.append("imageUrl", imageUrl);
     }
+
     try {
       const response = await axios.post("api/activity", formData, {
         headers: { "Content-Type": "multipart/form-data" },

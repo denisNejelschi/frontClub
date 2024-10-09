@@ -1,35 +1,38 @@
-import React, { useEffect } from "react";
-import { getActivities } from "./reduxActivitiesAction";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios, { AxiosError } from 'axios';
 
+export const getActivities = createAsyncThunk(
+  'activities/getActivities',
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get('/api/activity');
+      return response.data;  
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      return thunkAPI.rejectWithValue(axiosError.response?.data || axiosError.message);
+    }
+  }
+);
 
+export const addActivity = createAsyncThunk(
+  'activities/addActivity',
+  async (activityData: FormData, thunkAPI) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return thunkAPI.rejectWithValue("Пользователь не авторизован");
+    }
 
-
-function ReduxActivity() {
-    const {activities, isLoading, error} = useAppSelector(store => store.reduxActivities);
-
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        dispatch(getActivities());
-    }, [dispatch]);
-
-    return (
-        <div>
-            <h3>ReduxActivity</h3>
-            <p>В компоненте у нас будет два главных инструмента для работы с redux:</p>
-            <ul>
-                <li>useAppDispatch() - функция, внутри которой мы вызываем action и отправляем запрос</li>
-                <li>useAppSelector() - функция, в которой мы забираем изменения данных из store в любой компонент в приложении</li>
-            </ul>
-            <h3>Our activities from redux</h3>
-            {isLoading && <h4>Loading...</h4>}
-            {activities && activities.map(el => (
-                <p>{el.title}</p>
-            ))}
-            {error && <p style={{color: 'red'}}>{error}</p>} 
-        </div>
-    );
-}
-
-export default ReduxActivity;
+    try {
+      const response = await axios.post('/api/activity', activityData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data; 
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      return thunkAPI.rejectWithValue(axiosError.response?.data || axiosError.message);
+    }
+  }
+);

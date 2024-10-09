@@ -17,7 +17,7 @@ const App = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getUserWithToken());
-  }, [isAuthenticated]);
+  }, [dispatch, isAuthenticated]);
   return (
     <UserProvider>
       <HashRouter>
@@ -32,8 +32,7 @@ const App = () => {
                 <AddActivityForm
                   onSuccess={function (): void {
                     throw new Error("Function not implemented.");
-                  }}
-                />
+                  } } isAuthenticated={false}                />
               }
             />
             <Route
