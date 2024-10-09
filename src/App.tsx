@@ -32,7 +32,8 @@ const App = () => {
                 <AddActivityForm
                   onSuccess={function (): void {
                     throw new Error("Function not implemented.");
-                  } } isAuthenticated={false}                />
+                  }}
+                />
               }
             />
             <Route

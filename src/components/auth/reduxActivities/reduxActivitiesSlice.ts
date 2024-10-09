@@ -1,21 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getActivities, addActivity } from './reduxActivitiesAction';
-import { IActivity } from './types';
+import { createSlice } from "@reduxjs/toolkit";
+import { getActivities, addActivity } from "./reduxActivitiesAction";
+import { IActivity } from "./types";
 
-interface IActivitySlice {
+interface ActivityState {
   activities: IActivity[];
   isLoading: boolean;
   error: string | null;
 }
 
-const initialState: IActivitySlice = {
+const initialState: ActivityState = {
   activities: [],
   isLoading: false,
   error: null,
 };
 
-export const activitiesSlice = createSlice({
-  name: 'activities',
+const reduxActivitiesSlice = createSlice({
+  name: "reduxActivities",
   initialState,
   reducers: {
     cleanActivities: (state) => {
@@ -29,27 +29,27 @@ export const activitiesSlice = createSlice({
         state.error = null;
       })
       .addCase(getActivities.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.activities = action.payload;
+        state.isLoading = false;
       })
       .addCase(getActivities.rejected, (state, action) => {
-        state.isLoading = false;
         state.error = action.payload as string;
+        state.isLoading = false;
       })
       .addCase(addActivity.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(addActivity.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.activities.push(action.payload);
+        state.isLoading = false;
       })
       .addCase(addActivity.rejected, (state, action) => {
-        state.isLoading = false;
         state.error = action.payload as string;
+        state.isLoading = false;
       });
   },
 });
 
-export default activitiesSlice.reducer;
-export const { cleanActivities } = activitiesSlice.actions;
+export const { cleanActivities } = reduxActivitiesSlice.actions;
+export default reduxActivitiesSlice.reducer;
