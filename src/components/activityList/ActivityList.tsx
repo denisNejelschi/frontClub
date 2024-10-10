@@ -1,20 +1,22 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./activityList.module.css";
 import buttonStyles from "../button/button.module.css";
 import SearchBar from "../searchBar/SearchBar";
 
 interface IActivity {
-  id: number;
-  title: string;
-  image: string;
-  startDate: string;
-  description: string;
-  address: string;
+    id: number;
+    title: string;
+    image: string;
+    startDate: string;
+    description: string;
+    address: string;
 }
 
 const ActivityList: React.FC = () => {
-  const [filteredActivities, setFilteredActivities] = useState<IActivity[]>([]);
+    const [filteredActivities, setFilteredActivities] = useState<IActivity[]>([]);
+    const navigate = useNavigate();
+
 
   return (
     <>
@@ -25,7 +27,18 @@ const ActivityList: React.FC = () => {
         </Link>
       </div>
 
-      <SearchBar onFiltered={setFilteredActivities} />
+
+    return (
+        <>
+            <div className={styles.headerContainer}>
+                <h2 className={styles.pageTitle}>Активности</h2>
+                <button className={`${buttonStyles.button} ${styles.addButton}`}>
+                    Добавить активность
+                </button>
+            </div>
+
+            <SearchBar onFiltered={setFilteredActivities} />
+
 
       <div className={styles.activityListContainer}>
         {filteredActivities.length > 0 ? (
@@ -60,6 +73,7 @@ const ActivityList: React.FC = () => {
       </div>
     </>
   );
+
 };
 
 export default ActivityList;
