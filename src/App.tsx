@@ -19,7 +19,8 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getUserWithToken());
-  }, [isAuthenticated]);
+
+  }, [dispatch, isAuthenticated]);
 
   return (
       <UserProvider>
