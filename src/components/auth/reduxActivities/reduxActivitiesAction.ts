@@ -18,7 +18,7 @@ export const getActivities = createAsyncThunk(
 
 export const addActivity = createAsyncThunk(
   "activities/addActivity",
-  async (activityData: FormData, thunkAPI) => {
+  async (activityData: {title: string, address: string, startDate: string,  description: string, image: string}, thunkAPI) => {
     const token = localStorage.getItem("token");
     if (!token) {
       return thunkAPI.rejectWithValue("Пользователь не авторизован");
@@ -28,7 +28,9 @@ export const addActivity = createAsyncThunk(
       const response = await axios.post("/api/activity", activityData, {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
+        withCredentials: true,
       });
       return response.data;
     } catch (error) {

@@ -1,84 +1,88 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import style from "./formAddActivities.module.css";
+import { useFormik } from "formik"; 
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { useAppDispatch } from "../../app/hooks";
+import { useState, useEffect } from "react";
+import { addActivity } from "../auth/reduxActivities/reduxActivitiesAction";
+import style from "./formAddActivities.module.css";
+import axios from "axios";
+
 
 interface AddActivityFormProps {
   onSuccess: () => void;
 }
 
 const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
-  const [title, setTitle] = useState<string>("");
-  const [address, setAddress] = useState<string>("");
-  const [startDate, setStartDate] = useState<string>("");
-  const [image, setImage] = useState<File | null>(null);
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [imageUrl, setImageUrl] = useState<string>("");
 
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  // Check if user is authenticated
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setIsAuthenticated(true); // User is authenticated
+      setIsAuthenticated(true);
     } else {
-      setIsAuthenticated(false); // User is not authenticated
+      setIsAuthenticated(false);
     }
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      address: "",
+      startDate: "",
+      description: "",
+    },
+    validationSchema: Yup.object().shape({
+      title: Yup.string()
+        .required("Название обязательно")
+        .min(2, "Минимум 2 символа"),
+      address: Yup.string().required("Адрес обязателен"),
+      startDate: Yup.string().required("Дата обязательна"),
+      description: Yup.string().required("Описание обязательно"),
+    }),
+    onSubmit: async (values) => {
+      setLoading(true);
+      setErrorMessage(null);
+      setSuccessMessage(null);
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("address", address);
-    formData.append("startDate", startDate);
-    formData.append("description", description);
+      try {
+        await dispatch(
+          addActivity({
+            title: values.title,
+            address: values.address,
+            startDate: values.startDate,
+            description: values.description,
+            image: imageUrl, 
+          })
+        ).unwrap();
 
-    if (image) {
-      formData.append("image", image);
-    } else if (imageUrl) {
-      formData.append("imageUrl", imageUrl);
-    }
-
-    try {
-      const response = await axios.post("api/activity", formData, {
-        headers: { "Content-Type": "multipart/form-data", "Authorization": `Bearer ${localStorage.getItem('token')}` },
-      });
-      if (response.status === 201) {
-        setSuccessMessage("Мероприятие успешно добавлено!");
-        clearForm();
         onSuccess();
+        formik.resetForm();
+        setImageUrl("");
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          setErrorMessage(error.response?.data?.message || "Не удалось добавить мероприятие. Попробуйте снова."); 
+        } else {
+          setSuccessMessage("Мероприятие успешно добавлено!")
+        }
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        setErrorMessage(
-          error.response?.data.message ||
-            "Произошла ошибка при добавлении мероприятия"
-        );
-      } else {
-        setErrorMessage("Произошла ошибка при добавлении мероприятия");
-      }
-    }
-  };
+    },
+  });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setImage(e.target.files[0]);
+      const file = e.target.files[0];
+      const url = URL.createObjectURL(file);
+      setImageUrl(url);
     }
-  };
-
-  const clearForm = () => {
-    setTitle("");
-    setAddress("");
-    setStartDate("");
-    setImage(null);
-    setImageUrl("");
-    setDescription("");
   };
 
   const handleLoginRedirect = () => {
@@ -88,7 +92,9 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
   if (!isAuthenticated) {
     return (
       <div className={style.formContainer}>
-        <p className={style.errorMessage}>Пожалуйста, войдите, чтобы добавить мероприятие.</p>
+        <p className={style.errorMessage}>
+          Пожалуйста, войдите, чтобы добавить мероприятие.
+        </p>
         <button onClick={handleLoginRedirect} className={style.loginButton}>
           Войти
         </button>
@@ -103,42 +109,72 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
       {successMessage && (
         <p className={style.successMessage}>{successMessage}</p>
       )}
-      <form onSubmit={handleSubmit} className={style.form}>
+      <form onSubmit={formik.handleSubmit} className={style.form}>
         <input
           type="text"
           placeholder="Название"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          name="title"
+          value={formik.values.title}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           required
         />
+        {formik.errors.title && formik.touched.title && (
+          <p className={style.errorText}>{formik.errors.title}</p>
+        )}
+
         <input
           type="text"
           placeholder="Адрес"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          name="address"
+          value={formik.values.address}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           required
         />
+        {formik.errors.address && formik.touched.address && (
+          <p className={style.errorText}>{formik.errors.address}</p>
+        )}
+
         <input
           type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
+          name="startDate"
+          value={formik.values.startDate}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           required
         />
+        {formik.errors.startDate && formik.touched.startDate && (
+          <p className={style.errorText}>{formik.errors.startDate}</p>
+        )}
+
         <input
           type="text"
           placeholder="URL изображения (необязательно)"
           value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
+          readOnly // Делайте поле только для чтения, если хотите, чтобы пользователь не редактировал его вручную
         />
-        <input type="file" accept="image/*" onChange={handleFileChange} />
+
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+        />
+
         <textarea
           placeholder="Описание"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          name="description"
+          value={formik.values.description}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           required
         />
-        <button type="submit" className={style.submitButton}>
-          Добавить мероприятие
+        {formik.errors.description && formik.touched.description && (
+          <p className={style.errorText}>{formik.errors.description}</p>
+        )}
+
+        <button type="submit" className={style.submitButton} disabled={loading}>
+          {loading ? "Загрузка..." : "Добавить мероприятие"}
         </button>
       </form>
     </div>
