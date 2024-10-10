@@ -19,9 +19,9 @@ const ActivityList: React.FC = () => {
   return (
     <>
       <div className={styles.headerContainer}>
-        <h2 className={styles.pageTitle}>Активности</h2>
+        <h2 className={styles.pageTitle}>Activities</h2>
         <Link to="addActivity" className={`${buttonStyles.button} ${styles.addButton}`}>
-          Добавить активность
+        Add Activity
         </Link>
       </div>
 
@@ -46,15 +46,15 @@ const ActivityList: React.FC = () => {
               </p>
               <button
                 className={buttonStyles.button}
-                aria-label={`Подробнее о ${activity.title}`}
+                aria-label={`More about о ${activity.title}`}
               >
-                Подробнее
+                More
               </button>
             </div>
           ))
         ) : (
           <div className={styles.noResults}>
-            Нет активностей, соответствующих запросу.
+            No activities matching the query.
           </div>
         )}
       </div>

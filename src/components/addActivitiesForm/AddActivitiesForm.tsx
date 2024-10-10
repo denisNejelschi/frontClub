@@ -40,11 +40,11 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
     },
     validationSchema: Yup.object().shape({
       title: Yup.string()
-        .required("Название обязательно")
-        .min(2, "Минимум 2 символа"),
-      address: Yup.string().required("Адрес обязателен"),
-      startDate: Yup.string().required("Дата обязательна"),
-      description: Yup.string().required("Описание обязательно"),
+        .required("Title is required")
+        .min(2, "Minimum 2 characters"),
+      address: Yup.string().required("Date is required"),
+      startDate: Yup.string().required("Date is required"),
+      description: Yup.string().required("Description is required"),
     }),
     onSubmit: async (values) => {
       setLoading(true);
@@ -67,9 +67,9 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
         setImageUrl("");
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          setErrorMessage(error.response?.data?.message || "Не удалось добавить мероприятие. Попробуйте снова."); 
+          setErrorMessage(error.response?.data?.message || "Failed to add activity. Please try again."); 
         } else {
-          setSuccessMessage("Мероприятие успешно добавлено!")
+          setSuccessMessage("Activity successfully added")
         }
       } finally {
         setLoading(false);
@@ -93,10 +93,10 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
     return (
       <div className={style.formContainer}>
         <p className={style.errorMessage}>
-          Пожалуйста, войдите, чтобы добавить мероприятие.
+        Please log in to add an event.
         </p>
         <button onClick={handleLoginRedirect} className={style.loginButton}>
-          Войти
+        Log In
         </button>
       </div>
     );
@@ -104,7 +104,7 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
 
   return (
     <div className={style.formContainer}>
-      <h2 className={style.heading}>Добавить новое мероприятие</h2>
+      <h2 className={style.heading}>Add New Event</h2>
       {errorMessage && <p className={style.errorMessage}>{errorMessage}</p>}
       {successMessage && (
         <p className={style.successMessage}>{successMessage}</p>
@@ -112,7 +112,7 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
       <form onSubmit={formik.handleSubmit} className={style.form}>
         <input
           type="text"
-          placeholder="Название"
+          placeholder="Title"
           name="title"
           value={formik.values.title}
           onChange={formik.handleChange}
@@ -125,7 +125,7 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
 
         <input
           type="text"
-          placeholder="Адрес"
+          placeholder="Address"
           name="address"
           value={formik.values.address}
           onChange={formik.handleChange}
@@ -150,9 +150,9 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
 
         <input
           type="text"
-          placeholder="URL изображения (необязательно)"
+          placeholder="Image URL (optional)"
           value={imageUrl}
-          readOnly // Делайте поле только для чтения, если хотите, чтобы пользователь не редактировал его вручную
+          readOnly
         />
 
         <input
@@ -162,7 +162,7 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
         />
 
         <textarea
-          placeholder="Описание"
+          placeholder="Description"
           name="description"
           value={formik.values.description}
           onChange={formik.handleChange}
@@ -174,7 +174,7 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
         )}
 
         <button type="submit" className={style.submitButton} disabled={loading}>
-          {loading ? "Загрузка..." : "Добавить мероприятие"}
+          {loading ? "Loading..." : "Add Event"}
         </button>
       </form>
     </div>

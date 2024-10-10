@@ -21,7 +21,7 @@ export const addActivity = createAsyncThunk(
   async (activityData: {title: string, address: string, startDate: string,  description: string, image: string}, thunkAPI) => {
     const token = localStorage.getItem("token");
     if (!token) {
-      return thunkAPI.rejectWithValue("Пользователь не авторизован");
+      return thunkAPI.rejectWithValue("User is not authorized");
     }
 
     try {
