@@ -2,15 +2,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Высота 100% экрана */
-    background-color: #f0f4f8; /* Светло-серый фон */
+    height: 100vh; 
+    background-color: #f0f4f8; 
   }
   
   .heading {
     font-size: 3rem;
     font-weight: bold;
-    color: #2c3e50; /* Темный цвет заголовка */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Легкая тень */
+    color: #2c3e50;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     text-align: center;
   }
   

@@ -17,7 +17,7 @@ const App = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getUserWithToken());
-  }, [isAuthenticated]);
+  }, [dispatch, isAuthenticated]);
   return (
     <UserProvider>
       <HashRouter>
