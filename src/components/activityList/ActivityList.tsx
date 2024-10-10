@@ -39,7 +39,7 @@ const ActivityList: React.FC = () => {
               <h3 className={styles.activityTitle}>{activity.title}</h3>
               <p className={styles.activityAddress}>{activity.address}</p>
               <p className={styles.activityStartDate}>
-                Начало: {activity.startDate}
+              Start: {activity.startDate}
               </p>
               <p className={styles.activityDescription}>
                 {activity.description}
