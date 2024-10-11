@@ -113,14 +113,14 @@
   border: none;
   padding: 10px 16px;
   cursor: pointer;
-  margin: 10px auto; /* Центрирование кнопки с отступом сверху */
+  margin: 10px auto; 
   border-radius: 4px;
   font-size: 16px;
   transition: background-color 0.3s ease, transform 0.2s ease;
   text-align: center;
-  text-decoration: none; /* Для ссылок */
-  width: auto; /* Ширина теперь адаптивна */
-  max-width: 100%; /* Максимальная ширина кнопки будет не больше контейнера */
+  text-decoration: none;
+  width: auto; 
+  max-width: 100%; 
   text-transform: uppercase;
 }
 
