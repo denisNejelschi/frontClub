@@ -95,3 +95,37 @@
   background-color: #45a049;
   transform: scale(1.05);
 }
+
+.activityList {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center; /* Центрирование содержимого контейнера */
+}
+
+.activityList button, .activityList a {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  margin: 10px auto; /* Центрирование кнопки с отступом сверху */
+  border-radius: 4px;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+  text-decoration: none; /* Для ссылок */
+  width: auto; /* Ширина теперь адаптивна */
+  max-width: 100%; /* Максимальная ширина кнопки будет не больше контейнера */
+  text-transform: uppercase;
+}
+
+.activityList button:hover, .activityList a:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+

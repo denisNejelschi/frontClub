@@ -1,35 +1,28 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./activityList.module.css";
 import buttonStyles from "../button/button.module.css";
 import SearchBar from "../searchBar/SearchBar";
-import AddActivityForm from "../addActivitiesForm/AddActivitiesForm";
 
 interface IActivity {
   id: number;
   title: string;
   image: string;
   startDate: string;
-  description: string;
-  address: string;
+  // description: string;
+  // address: string;
 }
 
 const ActivityList: React.FC = () => {
   const [filteredActivities, setFilteredActivities] = useState<IActivity[]>([]);
-  
-  const navigate = useNavigate();
-
-  const handleDetailsClick = (activity: IActivity) => {
-    navigate(`/activityList/${activity.id}`, { state: { activity } });
-  };
 
   return (
     <>
       <div className={styles.headerContainer}>
-        <h2 className={styles.pageTitle}>Активности</h2>
-        <button className={`${buttonStyles.button} ${styles.addButton}`} onClick={() => AddActivityForm}> 
-          Добавить активность
-        </button>
+        <h2 className={styles.pageTitle}>Activity</h2>
+        <Link to="addActivity" className={`${buttonStyles.button} ${styles.addButton}`}>
+          Add activity
+        </Link>
       </div>
 
       <SearchBar onFiltered={setFilteredActivities} />
@@ -44,13 +37,21 @@ const ActivityList: React.FC = () => {
                 className={styles.activityImage}
               />
               <h3 className={styles.activityTitle}>{activity.title}</h3>
-              <button
+              {/* <p className={styles.activityAddress}>{activity.address}</p> */}
+              <p className={styles.activityStartDate}>
+                Начало: {activity.startDate}
+              </p>
+              {/* <p className={styles.activityDescription}>
+                {activity.description}
+              </p> */}
+              <Link 
+                to={`/activityList/${activity.id}`} 
+                state={{ activity }}  // Передаем объект activity через state
                 className={buttonStyles.button}
-                onClick={() => handleDetailsClick(activity)}
                 aria-label={`Подробнее о ${activity.title}`}
               >
-                Подробнее
-              </button>
+                More
+              </Link>
             </div>
           ))
         ) : (

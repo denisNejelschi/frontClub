@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from './activityDetail.module.css';
+
 interface Activity {
     id: number;
     title: string;
@@ -9,12 +10,15 @@ interface Activity {
     image: string;
     description: string;
 }
+
 const ActivityDetail: React.FC = () => {
     const location = useLocation();
     const activity = location.state?.activity as Activity | undefined;
+
     if (!activity) {
         return <div>Активность не найдена</div>;
     }
+
     return (
         <div className={styles.activityDetailContainer}>
             <h1 className={styles.activityDetailTitle}>{activity.title}</h1>
@@ -25,4 +29,5 @@ const ActivityDetail: React.FC = () => {
         </div>
     );
 };
+
 export default ActivityDetail;
