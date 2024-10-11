@@ -16,13 +16,13 @@ export interface ILoginFormValues {
 
 const schema = Yup.object().shape({
   username: Yup.string()
-  .required('Required field') 
-  .min(2, 'Minimum 2 characters')     
-  .max(20, 'Maximum 20 characters'),
-password: Yup.string()
-  .required('Required field')  
-  .min(2, 'Minimum 2 characters')     
-  .max(20, 'Maximum 20 characters'), 
+    .required('Обязательное поле') 
+    .min(2, 'Минимум 2 символа')     
+    .max(20, 'Максимум 20 символов'),
+  password: Yup.string()
+    .required('Обязательное поле')  
+    .min(2, 'Минимум 2 символа')     
+    .max(20, 'Максимум 20 символов'), 
 });
 
 export default function Login() {
@@ -50,12 +50,12 @@ export default function Login() {
 
         console.log('Login response:', response);
         
-        localStorage.setItem('token', response.token);
+        localStorage.setItem('club-token', response.token);
         
-        setSuccessMessage('Login successful!'); 
+        setSuccessMessage('Вход прошел успешно!'); 
         navigate('/'); 
       } catch (error) {
-        const errorMsg = typeof error === 'string' ? error : "Login failed. Please try again.";
+        const errorMsg = typeof error === 'string' ? error : "Вход не удался. Попробуйте снова.";
         setErrorMessage(errorMsg);
         console.error(error);
       } finally {
@@ -66,7 +66,7 @@ export default function Login() {
 
   return (
     <div>
-      <h2>Login</h2>
+      <h2>Вход</h2>
       {loading ? (
         <Loader />
       ) : (
@@ -85,13 +85,13 @@ export default function Login() {
           />
           <Input
             name='password'
-            placeholder='Password' 
+            placeholder='Пароль' 
             type='password'
             error={formik.errors.password}
             value={formik.values.password}
             onChange={formik.handleChange}
           />
-          <Button type='submit' name='Log In' disabled={loading} />
+          <Button type='submit' name='Войти' disabled={loading} />
           <Link to='/register' className={styles.link}>Create account</Link>
         </form>
       )}
