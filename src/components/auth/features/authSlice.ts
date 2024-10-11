@@ -18,7 +18,6 @@ export interface IUser {
 }
 
 export interface ITokenDto {
-  [x: string]: string;
   refreshToken: string;
   accessToken: string;
 }

@@ -15,18 +15,19 @@ export interface IRegisterFormValues  {
   email: string;
 }
 
+// Валидационная схема с использованием Yup
 const schema = Yup.object().shape({
   username: Yup.string()
-  .required('Required field')
-  .min(2, 'Minimum 2 characters')
-  .max(20, 'Maximum 20 characters'),
-email: Yup.string()
-  .required('Required field')
-  .email('Invalid email format'),
-password: Yup.string()
-  .required('Required field')
-  .min(2, 'Minimum 2 characters')
-  .max(20, 'Maximum 20 characters'),
+    .required('Обязательное поле')
+    .min(2, 'Минимум 2 символа')
+    .max(20, 'Максимум 20 символов'),
+  email: Yup.string()
+    .required('Обязательное поле')
+    .email('Неверный формат email'),
+  password: Yup.string()
+    .required('Обязательное поле')
+    .min(2, 'Минимум 2 символа')
+    .max(20, 'Максимум 20 символов'),
 });
 
 export default function Register() {
@@ -54,11 +55,11 @@ export default function Register() {
           email: values.email,
         })).unwrap();
         
-        setSuccessMessage('Registration successful!');
+        setSuccessMessage('Регистрация прошла успешно!');
         resetForm(); 
         navigate('/'); 
       } catch (error) {
-        setErrorMessage(typeof error === 'string' ? error : "Registration failed. Please try again.");
+        setErrorMessage(typeof error === 'string' ? error : "Регистрация не удалась. Попробуйте снова.");
         console.error('Registration error:', error);
       } finally {
         setLoading(false);
@@ -68,7 +69,7 @@ export default function Register() {
 
   return (
     <section>
-      <h2>Create Account</h2>
+      <h2>Создать аккаунт</h2>
       {loading ? (
         <Loader />
       ) : (
@@ -79,7 +80,7 @@ export default function Register() {
           </div>
           <Input
             name='username'
-            placeholder='Username'
+            placeholder='Имя пользователя'
             type='text'
             error={formik.errors.username}
             value={formik.values.username}
@@ -95,13 +96,13 @@ export default function Register() {
           />
           <Input
             name='password'
-            placeholder='Password'
+            placeholder='Пароль'
             type='password'
             error={formik.errors.password}
             value={formik.values.password}
             onChange={formik.handleChange}
           />
-          <Button type='submit' name='Register' disabled={loading} />
+          <Button type='submit' name='Зарегистрироваться' disabled={loading} />
           <Link to='/login' className={styles.link}>Sing In</Link>
         </form>
       )}
