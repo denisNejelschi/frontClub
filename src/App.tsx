@@ -12,6 +12,7 @@ import { UserProvider } from "./components/userContext/UserContext";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { getUserWithToken } from "./components/auth/features/authAction";
+import ActivityDetail from "./components/activityDetail/ActivityDetail";
 
 const App = () => {
   const isAuthenticated = useAppSelector((store) => store.user.isAuthenticated);
@@ -22,26 +23,37 @@ const App = () => {
   }, [isAuthenticated]);
 
   return (
-      <UserProvider>
-        <HashRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<HomePage />} />
-              <Route path="/homePage" element={<HomePage />} />
-              <Route path="/activityList" element={<ActivityList />} />
-              <Route
-                  path="/activityList/addActivity"
-                  element={<AddActivityForm onSuccess={() => {}} />}
-              />
-              <Route path="/activityList/:id" element={<ActivityDetail />} />
-              <Route path="/school" element={<ProtectedRoute component={<School />} />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="*" element={<h1>Error 404 😵</h1>} />
-            </Route>
-          </Routes>
-        </HashRouter>
-      </UserProvider>
+
+    <UserProvider>
+      <HashRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route path="/homePage" element={<HomePage />} />
+            <Route path="/activityList" element={<ActivityList />} />
+            <Route
+              path="/activityList/addActivity"
+              element={
+                <AddActivityForm
+                  onSuccess={function (): void {
+                    throw new Error("Function not implemented.");
+                  }}
+                />
+              }
+            />
+            <Route path="/activityList/:id" element={<ActivityDetail />} />
+            <Route
+              path="/school"
+              element={<ProtectedRoute component={<School />} />}
+            />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="*" element={<h1>Error 404 😵</h1>} />
+          </Route>
+        </Routes>
+      </HashRouter>
+    </UserProvider>
+
   );
 };
 
