@@ -1,7 +1,7 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
-import ActivityList from "./components/activityList/ActivityList";
 import AddActivityForm from "./components/addActivitiesForm/AddActivitiesForm";
 import ActivityDetail from "./components/activityDetail/ActivityDetail";
+import ActivityL
 import HomePage from "./components/homePages/HomePage";
 import Layout from "./components/layout/Layout";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
@@ -12,7 +12,7 @@ import { UserProvider } from "./components/userContext/UserContext";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { getUserWithToken } from "./components/auth/features/authAction";
-import ActivityDetail from "./components/activityDetail/ActivityDetail";
+
 
 const App = () => {
   const isAuthenticated = useAppSelector((store) => store.user.isAuthenticated);
