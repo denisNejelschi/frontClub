@@ -1,6 +1,7 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import authSlice from "../components/auth/features/authSlice";
-import reduxProductsSlice from "../components/auth/reduxProducts/reduxProductsSlices";
+import reduxProductsSlice from "../components/auth/reduxActivities/reduxActivitiesSlice";
+
 
 
 export const store = configureStore({

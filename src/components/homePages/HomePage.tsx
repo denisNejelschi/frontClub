@@ -1,15 +1,25 @@
+import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import Loader from '../loader/Loader';
 
-
 export default function HomePage() {
-  const { user, isLoading } = useAppSelector(store => store.user);
+  const isLoading = useAppSelector(state => state.user.isLoading);
+  const [showLoader, setShowLoader] = useState(true);
+
+  useEffect(() => {
+    setShowLoader(true);
+    if (isLoading) {
+      const timer = setTimeout(() => setShowLoader(false), 100);
+      return () => clearTimeout(timer);
+    } else {
+      setShowLoader(false);
+    }
+  }, [isLoading]);
 
   return (
     <div>
-      {!isLoading && !user.firstName && <h2>Пройдите авторизацию 🔐</h2>}
-      {isLoading && <Loader />}
-      {user.firstName && <h2>Home 🏡</h2>}
+      {showLoader && <Loader />}
+      <h2>Home 🏡</h2>
     </div>
   );
 }
