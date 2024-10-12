@@ -1,7 +1,6 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
 import AddActivityForm from "./components/addActivitiesForm/AddActivitiesForm";
 import ActivityDetail from "./components/activityDetail/ActivityDetail";
-import ActivityL
 import HomePage from "./components/homePages/HomePage";
 import Layout from "./components/layout/Layout";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
@@ -12,6 +11,8 @@ import { UserProvider } from "./components/userContext/UserContext";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { getUserWithToken } from "./components/auth/features/authAction";
+import ActivityList from "./components/activityList/ActivityList.tsx";
+import UserProfile from "./components/userProfile/UserProfile.tsx";
 
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
             <Route index element={<HomePage />} />
             <Route path="/homePage" element={<HomePage />} />
             <Route path="/activityList" element={<ActivityList />} />
+            <Route path="/userProfile" element={<ProtectedRoute component={<UserProfile />} />} />
             <Route
               path="/activityList/addActivity"
               element={

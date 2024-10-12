@@ -39,6 +39,11 @@ export const Header: React.FC = () => {
                 </div>
                 {isAuthenticated ? (
                     <div className={styles.signOut}>
+                        <Link to='/userProfile'
+                            className={location.pathname === '/userProfile' ? styles.active : ''}
+                        >
+                            My profile
+                        </Link>
                         <Link onClick={handleLogout} to='/'>
                             Sign out
                         </Link>
