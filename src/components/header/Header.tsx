@@ -38,7 +38,7 @@ export const Header: React.FC = () => {
                     ))}
                 </div>
                 {isAuthenticated ? (
-                    <div className={styles.signOut}>
+                    <div className={styles.userActions}>
                         <Link to='/userProfile'
                             className={location.pathname === '/userProfile' ? styles.active : ''}
                         >
