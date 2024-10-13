@@ -20,7 +20,7 @@ const ParticipantsPage: React.FC = () => {
     },
     {
       id: 2,
-      firstName: "Marina",
+      firstName: "Maryna",
       lastName: "Matsveyenka",
       specialization: "FrontEnd",
       photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Xnp5sqAeZx9FlQUlmKKQwXFj977Cx-9TIw&s", 
@@ -44,6 +44,13 @@ const ParticipantsPage: React.FC = () => {
       firstName: "Vitalii",
       lastName: "Kovtun",
       specialization: "FrontEnd",
+      photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Xnp5sqAeZx9FlQUlmKKQwXFj977Cx-9TIw&s", 
+    },
+    {
+      id: 6,
+      firstName: "Dimitri",
+      lastName: "Heinrich",
+      specialization: "BackEnd",
       photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Xnp5sqAeZx9FlQUlmKKQwXFj977Cx-9TIw&s", 
     },
   ];
