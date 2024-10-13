@@ -10,7 +10,7 @@ export default function Layout() {
 
   useEffect(() => {
     // забираем token из браузерного хранилища
-    const token = localStorage.getItem("club-token");
+    const token = localStorage.getItem("token");
     // если токен не null (то есть существует)
     // делаем запрос за данными юзера с этим токеном
     if (token !== null) {
@@ -26,7 +26,6 @@ export default function Layout() {
       <main className={styles.main}>
         <Outlet />
       </main>
-      <footer className={styles.footer}></footer>
     </div>
   );
 }

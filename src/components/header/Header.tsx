@@ -27,6 +27,7 @@ export const Header: React.FC = () => {
       </div>
       <nav className={styles.navbar}>
         <div className={styles.navLinks}>
+        <span className={styles.username}>{user?.username}</span>
           {links(isAuthenticated).map((link) => (
             <Link
               key={link.pathname}

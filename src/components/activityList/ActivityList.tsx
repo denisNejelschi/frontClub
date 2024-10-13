@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "./activityList.module.css";
 import buttonStyles from "../button/button.module.css";
 import SearchBar from "../searchBar/SearchBar";
+import ScrollToTopButton from "../scrollToTopButton/ScrollToTopButton";
 
 interface IActivity {
   id: number;
@@ -60,6 +61,7 @@ const ActivityList: React.FC = () => {
           </div>
         )}
       </div>
+      '<ScrollToTopButton />'
     </>
   );
 };

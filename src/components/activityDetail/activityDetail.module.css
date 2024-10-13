@@ -6,6 +6,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 95%;
 }
 .activityDetailTitle {
     font-size: 2rem;
@@ -37,4 +38,15 @@
     color: #444;
     margin-top: 15px;
     text-align: justify;
+}
+@media (max-width: 768px) {
+    .activityDetailContainer {
+        padding: 15px;
+        max-width: 90%;
+    }
+}
+@media (min-width: 1440px) {
+    .activityDetailContainer {
+        max-width: 1000px;
+    }
 }

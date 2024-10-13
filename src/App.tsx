@@ -12,6 +12,9 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { getUserWithToken } from "./components/auth/features/authAction";
 import ActivityDetail from "./components/activityDetail/ActivityDetail";
+import { Footer } from "./components/footer/Footer";
+import ParticipantsPage from "./components/participantsPage/participantsPage";
+
 
 const App = () => {
   const isAuthenticated = useAppSelector((store) => store.user.isAuthenticated);
@@ -44,9 +47,11 @@ const App = () => {
             />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route  path="/participantsPage" element={<ParticipantsPage />} />
             <Route path="*" element={<h1>Error 404 😵</h1>} />
           </Route>
         </Routes>
+        <Footer />
       </HashRouter>
     </UserProvider>
   );
