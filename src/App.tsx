@@ -1,28 +1,33 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
-import ActivityList from "./components/activityList/ActivityList";
 import AddActivityForm from "./components/addActivitiesForm/AddActivitiesForm";
-import Login from "./components/auth/Login";
-import Register from "./components/auth/Register";
+import ActivityDetail from "./components/activityDetail/ActivityDetail";
 import HomePage from "./components/homePages/HomePage";
 import Layout from "./components/layout/Layout";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import School from "./components/school/school";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
 import { UserProvider } from "./components/userContext/UserContext";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { getUserWithToken } from "./components/auth/features/authAction";
+
 import ActivityDetail from "./components/activityDetail/ActivityDetail";
 import { Footer } from "./components/footer/Footer";
 import ParticipantsPage from "./components/participantsPage/participantsPage";
 
 
+
 const App = () => {
   const isAuthenticated = useAppSelector((store) => store.user.isAuthenticated);
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(getUserWithToken());
-  }, [dispatch, isAuthenticated]);
+  }, [isAuthenticated]);
+
   return (
+
     <UserProvider>
       <HashRouter>
         <Routes>
@@ -30,6 +35,7 @@ const App = () => {
             <Route index element={<HomePage />} />
             <Route path="/homePage" element={<HomePage />} />
             <Route path="/activityList" element={<ActivityList />} />
+            <Route path="/userProfile" element={<ProtectedRoute component={<UserProfile />} />} />
             <Route
               path="/activityList/addActivity"
               element={
@@ -54,6 +60,7 @@ const App = () => {
         <Footer />
       </HashRouter>
     </UserProvider>
+
   );
 };
 

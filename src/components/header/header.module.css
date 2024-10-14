@@ -1,6 +1,8 @@
 .header {
+
   background: linear-gradient(90deg, #007bff 0%, #b3cccf 100%);
   padding: 20px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,7 +11,9 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
 }
 
 .header_container {
@@ -30,25 +34,31 @@ h1 {
 .navbar {
   display: flex;
   justify-content: space-between;
+
   width: 100vw;
   max-width: 1300px;
   padding: 0 30px;
   flex-wrap: wrap;
+
 }
 
 .navLinks {
   display: flex;
+
   gap: 30px;
   flex-wrap: wrap;
+
 }
 
 nav a {
   color: #ffffff;
   text-decoration: none;
+
   padding: 12px 25px;
   border-radius: 50px;
   background: rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease-in-out;
+
 }
 
 nav a:hover {
@@ -56,6 +66,7 @@ nav a:hover {
   transform: scale(1.05);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
+
 
 nav a.active {
   background-color: rgba(255, 255, 255, 0.4);
@@ -65,6 +76,7 @@ nav a.active {
 .signOut, .authButtons {
   margin-left: auto;
 }
+
 
 .authButtons {
   display: flex;
@@ -91,20 +103,26 @@ nav a.active {
   .navbar {
     flex-direction: column;
     align-items: center;
+
     width: 100%;
+
   }
 
   .navLinks {
     justify-content: center;
   }
 
-  .authButtons {
+  .authButtons,
+  .userActions {
     justify-content: center;
     margin-top: 15px;
   }
 
   nav a {
+
     padding: 14px 30px;
+
+  
   }
 }
 
