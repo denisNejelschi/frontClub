@@ -69,15 +69,24 @@
 
 .headerContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; 
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 20px; 
 }
 
 .pageTitle {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c3e50;
+  text-align: center; 
+  flex-grow: 1; 
+  margin: 10px 0; 
+  padding: 10px; 
+  border-bottom: 3px solid #007bff; 
+  text-transform: uppercase; 
+  letter-spacing: 1px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  background-color: #f9f9f9; 
 }
 
 .addButton {
@@ -91,6 +100,7 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+
 .addButton:hover {
   background-color: #45a049;
   transform: scale(1.05);
@@ -103,7 +113,7 @@
   padding: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-align: center; /* Центрирование содержимого контейнера */
+  text-align: center; 
 }
 
 .activityList button, .activityList a {
