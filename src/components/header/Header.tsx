@@ -20,12 +20,12 @@ export const Header: React.FC = () => {
         window.location.href = '/'; 
     };
 
-  const handleLogout = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    dispatch(logoutUser());
-    dispatch(cleanActivities());
-    window.location.href = "/";
-  };
+  // const handleLogout = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  //   event.preventDefault();
+  //   dispatch(logoutUser());
+  //   dispatch(cleanActivities());
+  //   window.location.href = "/";
+  // };
 
   return (
     <header className={styles.header}>

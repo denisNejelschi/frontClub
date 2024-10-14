@@ -65,16 +65,9 @@ const ActivityList: React.FC = () => {
                     </p>
                 )}
             </div>
-          ))
-        ) : (
-          <div className={styles.noResults}>
-            Нет активностей, соответствующих запросу.
-          </div>
-        )}
-      </div>
-      '<ScrollToTopButton />'
-    </>
-  );
+            <ScrollToTopButton />
+        </div>
+    );
 };
 
 export default ActivityList;

@@ -11,9 +11,10 @@ import { UserProvider } from "./components/userContext/UserContext";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { getUserWithToken } from "./components/auth/features/authAction";
-import ActivityDetail from "./components/activityDetail/ActivityDetail";
 import { Footer } from "./components/footer/Footer";
 import ParticipantsPage from "./components/participantsPage/participantsPage";
+import UserProfile from "./components/userProfile/UserProfile";
+import ActivityList from "./components/activityList/ActivityList";
 
 const App = () => {
   const isAuthenticated = useAppSelector((store) => store.user.isAuthenticated);
@@ -37,8 +38,12 @@ const App = () => {
               path="/activityList/addActivity"
               element={
                 <AddActivityForm
-                  onSuccess={function (): void {
-                    throw new Error("Function not implemented.");
+                  onSuccess={() => {
+                    // Логика при успешном добавлении активности
+                    console.log("Activity successfully added!");
+
+                    // Например, можно перенаправить пользователя на список активностей:
+                    window.location.href = "/activityList"; // Перенаправление на страницу списка активностей
                   }}
                 />
               }
