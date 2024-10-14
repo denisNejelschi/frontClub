@@ -113,3 +113,19 @@ button:hover {
   color: #357ae8;
   text-decoration: underline;
 }
+
+.success {
+  background-color: #d4edda; /* Светлый зеленый фон */
+  border: 1px solid #c3e6cb; /* Более темный зеленый для рамки */
+  color: #155724; /* Темно-зеленый текст */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px; /* Закругленные углы */
+  margin-bottom: 15px; /* Отступ снизу */
+}
+
+.success::before {
+  content: '✅'; /* Иконка успеха */
+  margin-right: 8px; /* Отступ справа от иконки */
+}
