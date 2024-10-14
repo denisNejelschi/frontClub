@@ -1,12 +1,24 @@
 import React from "react";
-import styles from "./footer.module.css"
+import styles from "./footer.module.css";
+import { Link } from "react-router-dom";
 
 export const Footer: React.FC = () => {
     return (
-        <div className={styles.footer_container}>
-            <h3>
-                Footer component
-            </h3>
-        </div>
+        <footer className={styles.footer}>
+            <div className={styles.footer_container}>
+                <p className={styles.footerText}>©© 2024 Conversation Club | All rights reserved</p>
+                <Link to="/participantsPage" className={styles.navLink}>
+                Project Participants
+                </Link>
+                <a
+                    href="https://www.ait-tr.de/"
+                    target="_blank"
+                    rel="noopener noreferrer" 
+                    className={styles.navLink}
+                >
+                    AIT-TR
+                </a>
+            </div>
+        </footer>
     );
 };
