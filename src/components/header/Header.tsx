@@ -7,11 +7,18 @@ import { cleanActivities } from "../auth/reduxActivities/reduxActivitiesSlice";
 import { links } from "./links";
 
 export const Header: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const location = useLocation();
+    const dispatch = useAppDispatch();
+    const location = useLocation();
 
-  const { user } = useAppSelector((store) => store.user);
-  const isAuthenticated = Boolean(user?.username);
+    const { user } = useAppSelector(store => store.user);
+    const isAuthenticated = Boolean(user?.username); 
+    
+    const handleLogout = (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        dispatch(logoutUser());
+        dispatch(cleanActivities());
+        window.location.href = '/'; 
+    };
 
   const handleLogout = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();

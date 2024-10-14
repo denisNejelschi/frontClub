@@ -1,9 +1,10 @@
-import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
-import { useAppDispatch } from "../../app/hooks";
-import { getActivities } from "../auth/reduxActivities/reduxActivitiesAction";
-import { Header } from "../header/Header";
-import styles from "../layout/layout.module.css";
+import { useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
+import { useAppDispatch } from '../../app/hooks';
+import { getActivities } from '../auth/reduxActivities/reduxActivitiesAction';
+import { Header } from '../header/Header';
+import styles from '../layout/layout.module.css';
+
 
 export default function Layout() {
   const dispatch = useAppDispatch();

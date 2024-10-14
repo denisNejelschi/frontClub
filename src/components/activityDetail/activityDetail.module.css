@@ -2,12 +2,16 @@
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
+
     background-color: #F9F9F9;
+
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 95%;
 }
+
+
 .activityDetailTitle {
     font-size: 2rem;
     font-weight: bold;
@@ -15,6 +19,8 @@
     margin-bottom: 15px;
     text-align: center;
 }
+
+
 .activityDetailImage {
     width: 100%;
     height: auto;
@@ -22,22 +28,29 @@
     margin-bottom: 20px;
     object-fit: cover;
 }
+
+
 .activityDetailAddress,
 .activityDetailDate {
     font-size: 1.1rem;
     color: #666;
     margin-bottom: 10px;
 }
+
+
 .activityDetailAddress strong,
 .activityDetailDate strong {
     color: #333;
 }
+
+
 .activityDetailDescription {
     font-size: 1rem;
     line-height: 1.6;
     color: #444;
     margin-top: 15px;
     text-align: justify;
+
 }
 @media (max-width: 768px) {
     .activityDetailContainer {
@@ -50,3 +63,4 @@
         max-width: 1000px;
     }
 }
+
