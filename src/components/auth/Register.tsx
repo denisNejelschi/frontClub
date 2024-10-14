@@ -8,6 +8,7 @@ import { registerUser } from './features/authAction';
 import styles from './auth.module.css';
 import { useState } from 'react';
 import Loader from '../loader/Loader';
+import axios from 'axios';
 
 export interface IRegisterFormValues  {
   username: string;
@@ -15,7 +16,6 @@ export interface IRegisterFormValues  {
   email: string;
 }
 
-// Валидационная схема с использованием Yup
 const schema = Yup.object().shape({
   username: Yup.string()
     .required('Обязательное поле')
@@ -55,16 +55,28 @@ export default function Register() {
           email: values.email,
         })).unwrap();
         
-        setSuccessMessage('Регистрация прошла успешно!');
-        resetForm(); 
-        navigate('/'); 
+        setSuccessMessage(
+          "Регистрация прошла успешно! Проверьте вашу почту для подтверждения."
+        );
+        resetForm();
+
+        setTimeout(() => {
+          navigate("/");
+        }, 5000);
       } catch (error) {
-        setErrorMessage(typeof error === 'string' ? error : "Регистрация не удалась. Попробуйте снова.");
-        console.error('Registration error:', error);
+        if (axios.isAxiosError(error)) {
+          const message =
+            error.response?.data?.message ||
+            "Ошибка регистрации. Попробуйте снова.";
+          setErrorMessage(message);
+        } else {
+          setErrorMessage("Произошла неизвестная ошибка.");
+        }
+        console.error(error);
       } finally {
         setLoading(false);
       }
-    }
+    },
   });
 
   return (
