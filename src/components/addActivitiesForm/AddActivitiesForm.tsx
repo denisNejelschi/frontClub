@@ -1,4 +1,4 @@
-import { useFormik } from "formik"; 
+import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useAppDispatch } from "../../app/hooks";
@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import { addActivity } from "../auth/reduxActivities/reduxActivitiesAction";
 import style from "./formAddActivities.module.css";
 import axios from "axios";
-
 
 interface AddActivityFormProps {
   onSuccess: () => void;
@@ -52,31 +51,42 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
       setSuccessMessage(null);
 
       try {
-        await dispatch(
+        const resultActivity = await dispatch(
           addActivity({
             title: values.title,
             address: values.address,
             startDate: values.startDate,
             description: values.description,
-            image: image, 
+            image: image,
           })
         ).unwrap();
+
+        const { id } = resultActivity;
+
+        setTimeout(() => {
+          navigate(`/activityList/${id}`, {
+            state: { activity: resultActivity },
+          });
+        }, 2000);
 
         onSuccess();
         formik.resetForm();
         setImageUrl("");
+        setSuccessMessage("The event has been successfully added!");
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          setErrorMessage(error.response?.data?.message || "Failed to add the event. Please try again."); 
+          setErrorMessage(
+            error.response?.data?.message ||
+              "Failed to add the event. Please try again."
+          );
         } else {
-          setSuccessMessage("The event has been successfully added!")
+          setSuccessMessage("The event has been successfully added!");
         }
       } finally {
         setLoading(false);
       }
     },
   });
-
 
   const handleLoginRedirect = () => {
     navigate("/login");
@@ -85,9 +95,7 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
   if (!isAuthenticated) {
     return (
       <div className={style.formContainer}>
-        <p className={style.errorMessage}>
-        Please log in to add an event.
-        </p>
+        <p className={style.errorMessage}>Please log in to add an event.</p>
         <button onClick={handleLoginRedirect} className={style.loginButton}>
           Sing In
         </button>
@@ -148,10 +156,10 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
           onChange={(e) => setImageUrl(e.target.value)}
         />
         {image && (
-        <div className={style.imagePreview}>
-          <img src={image} alt="Activity" className={style.activityImage} />
-        </div>
-      )}
+          <div className={style.imagePreview}>
+            <img src={image} alt="Activity" className={style.activityImage} />
+          </div>
+        )}
 
         <textarea
           placeholder="Description"

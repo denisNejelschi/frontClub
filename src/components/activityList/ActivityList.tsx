@@ -20,19 +20,20 @@ const ActivityList: React.FC = () => {
 
   useEffect(() => {
     dispatch(getActivities());
-  }, [dispatch])
+  }, [dispatch]);
 
   return (
     <>
       <div className={styles.headerContainer}>
         <h2 className={styles.pageTitle}>Activity</h2>
-        <Link to="addActivity" className={`${buttonStyles.button} ${styles.addButton}`}>
+        <Link
+          to="addActivity"
+          className={`${buttonStyles.button} ${styles.addButton}`}
+        >
           Add activity
         </Link>
       </div>
-
       <SearchBar onFiltered={setFilteredActivities} />
-
       <div className={styles.activityListContainer}>
         {filteredActivities.length > 0 ? (
           filteredActivities.map((activity) => (
@@ -42,19 +43,13 @@ const ActivityList: React.FC = () => {
                 alt={activity.title}
                 className={styles.activityImage}
               />
-
-              
               <h3 className={styles.activityTitle}>{activity.title}</h3>
-
-
-            
               <p className={styles.activityStartDate}>
-              Start: {activity.startDate}
+                Start: {activity.startDate}
               </p>
-              
-              <Link 
-                to={`/activityList/${activity.id}`} 
-                state={{ activity }} 
+              <Link
+                to={`/activityList/${activity.id}`}
+                state={{ activity }}
                 className={buttonStyles.button}
                 aria-label={`Подробнее о ${activity.title}`}
               >
