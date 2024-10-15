@@ -1,21 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./activityList.module.css";
 import buttonStyles from "../button/button.module.css";
 import SearchBar from "../searchBar/SearchBar";
 import ScrollToTopButton from "../scrollToTopButton/ScrollToTopButton";
+import { useAppDispatch } from "../../app/hooks";
+import { getActivities } from "../auth/reduxActivities/reduxActivitiesAction";
 
 interface IActivity {
   id: number;
   title: string;
   image: string;
   startDate: string;
-  // description: string;
-  // address: string;
 }
 
 const ActivityList: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [filteredActivities, setFilteredActivities] = useState<IActivity[]>([]);
+
+  useEffect(() => {
+    dispatch(getActivities());
+  }, [dispatch])
 
   return (
     <>
@@ -37,17 +42,19 @@ const ActivityList: React.FC = () => {
                 alt={activity.title}
                 className={styles.activityImage}
               />
+
+              
               <h3 className={styles.activityTitle}>{activity.title}</h3>
-              {/* <p className={styles.activityAddress}>{activity.address}</p> */}
+
+
+            
               <p className={styles.activityStartDate}>
-                Начало: {activity.startDate}
+              Start: {activity.startDate}
               </p>
-              {/* <p className={styles.activityDescription}>
-                {activity.description}
-              </p> */}
+              
               <Link 
                 to={`/activityList/${activity.id}`} 
-                state={{ activity }}  // Передаем объект activity через state
+                state={{ activity }} 
                 className={buttonStyles.button}
                 aria-label={`Подробнее о ${activity.title}`}
               >
@@ -57,7 +64,7 @@ const ActivityList: React.FC = () => {
           ))
         ) : (
           <div className={styles.noResults}>
-            Нет активностей, соответствующих запросу.
+            No activities match the search query.
           </div>
         )}
       </div>

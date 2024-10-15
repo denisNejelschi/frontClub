@@ -15,7 +15,7 @@ const initialState: ActivityState = {
 };
 
 const reduxActivitiesSlice = createSlice({
-  name: "reduxActivities",
+  name: "activities",
   initialState,
   reducers: {
     cleanActivities: (state) => {

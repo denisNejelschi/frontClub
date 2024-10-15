@@ -44,3 +44,10 @@
 .submitButton:hover {
   background-color: #45a049;
 }
+
+.activityImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px; 
+  margin-top: 10px;
+}

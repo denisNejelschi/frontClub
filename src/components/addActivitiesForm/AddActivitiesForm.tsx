@@ -17,7 +17,7 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [imageUrl, setImageUrl] = useState<string>("");
+  const [image, setImageUrl] = useState<string>("");
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -40,11 +40,11 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
     },
     validationSchema: Yup.object().shape({
       title: Yup.string()
-        .required("Название обязательно")
-        .min(2, "Минимум 2 символа"),
-      address: Yup.string().required("Адрес обязателен"),
-      startDate: Yup.string().required("Дата обязательна"),
-      description: Yup.string().required("Описание обязательно"),
+        .required("Title is required")
+        .min(2, "Minimum 2 characters"),
+      address: Yup.string().required("Address is required"),
+      startDate: Yup.string().required("Date is required"),
+      description: Yup.string().required("Description is required"),
     }),
     onSubmit: async (values) => {
       setLoading(true);
@@ -58,7 +58,7 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
             address: values.address,
             startDate: values.startDate,
             description: values.description,
-            image: imageUrl, 
+            image: image, 
           })
         ).unwrap();
 
@@ -67,9 +67,9 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
         setImageUrl("");
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          setErrorMessage(error.response?.data?.message || "Не удалось добавить мероприятие. Попробуйте снова."); 
+          setErrorMessage(error.response?.data?.message || "Failed to add the event. Please try again."); 
         } else {
-          setSuccessMessage("Мероприятие успешно добавлено!")
+          setSuccessMessage("The event has been successfully added!")
         }
       } finally {
         setLoading(false);
@@ -77,13 +77,6 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
     },
   });
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      const url = URL.createObjectURL(file);
-      setImageUrl(url);
-    }
-  };
 
   const handleLoginRedirect = () => {
     navigate("/login");
@@ -93,10 +86,10 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
     return (
       <div className={style.formContainer}>
         <p className={style.errorMessage}>
-          Пожалуйста, войдите, чтобы добавить мероприятие.
+        Please log in to add an event.
         </p>
         <button onClick={handleLoginRedirect} className={style.loginButton}>
-          Войти
+          Sing In
         </button>
       </div>
     );
@@ -104,7 +97,7 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
 
   return (
     <div className={style.formContainer}>
-      <h2 className={style.heading}>Добавить новое мероприятие</h2>
+      <h2 className={style.heading}>Add a new event</h2>
       {errorMessage && <p className={style.errorMessage}>{errorMessage}</p>}
       {successMessage && (
         <p className={style.successMessage}>{successMessage}</p>
@@ -150,19 +143,18 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
 
         <input
           type="text"
-          placeholder="URL изображения (необязательно)"
-          value={imageUrl}
-          readOnly // Делайте поле только для чтения, если хотите, чтобы пользователь не редактировал его вручную
+          placeholder="URL изображения"
+          value={image}
+          onChange={(e) => setImageUrl(e.target.value)}
         />
-
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-        />
+        {image && (
+        <div className={style.imagePreview}>
+          <img src={image} alt="Activity" className={style.activityImage} />
+        </div>
+      )}
 
         <textarea
-          placeholder="Описание"
+          placeholder="Description"
           name="description"
           value={formik.values.description}
           onChange={formik.handleChange}
@@ -174,7 +166,7 @@ const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSuccess }) => {
         )}
 
         <button type="submit" className={style.submitButton} disabled={loading}>
-          {loading ? "Загрузка..." : "Добавить мероприятие"}
+          {loading ? "Loading..." : "Add activity"}
         </button>
       </form>
     </div>
