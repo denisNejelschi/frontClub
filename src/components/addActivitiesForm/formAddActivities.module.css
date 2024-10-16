@@ -75,7 +75,7 @@ input[type="date"] {
   margin-top: 10px;
 }
 
-/* Пример медиазапроса для мобильных устройств */
+
 @media (max-width: 600px) {
   .formContainer {
     padding: 10px;

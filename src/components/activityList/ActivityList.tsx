@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import styles from "./activityList.module.css";
 import buttonStyles from "../button/button.module.css";
 import SearchBar from "../searchBar/SearchBar";
@@ -17,6 +18,23 @@ interface IActivity {
 const ActivityList: React.FC = () => {
   const dispatch = useAppDispatch();
   const [filteredActivities, setFilteredActivities] = useState<IActivity[]>([]);
+
+  // Function to handle participation in an activity
+  const handleParticipate = async (activityId: number) => {
+    try {
+      const response = await axios.put(`/api/activity/${activityId}/add-user`, null, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Assuming the token is in localStorage
+        },
+      });
+      if (response.status === 200) {
+        alert("Successfully registered for the activity!");
+      }
+    } catch (error) {
+      console.error("Error registering for activity:", error);
+      alert("Failed to register for the activity. Please try again.");
+    }
+  };
 
   useEffect(() => {
     dispatch(getActivities());
@@ -47,14 +65,24 @@ const ActivityList: React.FC = () => {
               <p className={styles.activityStartDate}>
                 Start: {activity.startDate}
               </p>
+              
+             
               <Link
                 to={`/activityList/${activity.id}`}
                 state={{ activity }}
                 className={buttonStyles.button}
-                aria-label={`Подробнее о ${activity.title}`}
+                aria-label={`More about ${activity.title}`}
               >
                 More
               </Link>
+
+              
+              <button
+                className={`${buttonStyles.button} ${styles.participateButton}`}
+                onClick={() => handleParticipate(activity.id)}
+              >
+                Participate
+              </button>
             </div>
           ))
         ) : (
@@ -63,7 +91,7 @@ const ActivityList: React.FC = () => {
           </div>
         )}
       </div>
-      '<ScrollToTopButton />'
+      <ScrollToTopButton />
     </>
   );
 };
