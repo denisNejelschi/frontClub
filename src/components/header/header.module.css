@@ -71,16 +71,18 @@ nav a.active {
   gap: 15px;
 }
 
-.authButtons a {
-  padding: 10px 20px;
+.authButtons a .signOut {
+  padding: 10px 25px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 50px;
   color: #ffffff;
+  transition: all 0.3s ease-in-out;
 }
 
-.authButtons a:hover {
+.authButtons a:hover, .signOut a:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 768px) {
