@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./participantsPage.module.css";
+import styles from "./projectCreators.module.css"
 
 interface IParticipant {
   id: number;
@@ -9,7 +9,7 @@ interface IParticipant {
   photo: string; 
 }
 
-const ParticipantsPage: React.FC = () => {
+const ProjectCreators: React.FC = () => {
   const participants: IParticipant[] = [
     {
       id: 1,
@@ -58,7 +58,7 @@ const ParticipantsPage: React.FC = () => {
   return (
     <div className={styles.participantsContainer}>
       <div className={styles.headerContainer}> 
-        <h2>Project Participants</h2>
+        <h2>Project Creators</h2>
       </div>
       <div className={styles.participantList}>
         {participants.map((participant) => (
@@ -77,4 +77,4 @@ const ParticipantsPage: React.FC = () => {
   );
 };
 
-export default ParticipantsPage;
+export default ProjectCreators;

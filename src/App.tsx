@@ -13,7 +13,10 @@ import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { getUserWithToken } from "./components/auth/features/authAction";
 import ActivityDetail from "./components/activityDetail/ActivityDetail";
 import { Footer } from "./components/footer/Footer";
-import ParticipantsPage from "./components/participantsPage/participantsPage";
+import ProjectCreators from "./components/projectCreators/projectCreators";
+
+
+
 
 
 const App = () => {
@@ -47,7 +50,7 @@ const App = () => {
             />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-            <Route  path="/participantsPage" element={<ParticipantsPage />} />
+            <Route  path="/projectCreators" element={<ProjectCreators/>} />
             <Route path="*" element={<h1>Error 404 😵</h1>} />
           </Route>
         </Routes>
