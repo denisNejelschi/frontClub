@@ -5,7 +5,7 @@ import styles from "./activityList.module.css";
 import buttonStyles from "../button/button.module.css";
 import SearchBar from "../searchBar/SearchBar";
 import ScrollToTopButton from "../scrollToTopButton/ScrollToTopButton";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { getActivities } from "../auth/reduxActivities/reduxActivitiesAction";
 
 interface IActivity {
@@ -18,17 +18,49 @@ interface IActivity {
 const ActivityList: React.FC = () => {
   const dispatch = useAppDispatch();
   const [filteredActivities, setFilteredActivities] = useState<IActivity[]>([]);
+  const [userRegisteredActivities, setUserRegisteredActivities] = useState<
+    Set<number>
+  >(new Set());
+  const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
 
-  // Function to handle participation in an activity
+  const fetchRegisteredActivities = async () => {
+    try {
+      const response = await axios.get(
+        "/api/activity/user/registered-activities",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      const registeredActivities = new Set(response.data);
+      setUserRegisteredActivities(registeredActivities);
+    } catch (error) {
+      console.error("Error fetching registered activities:", error);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getActivities());
+    if (isAuthenticated) {
+      fetchRegisteredActivities();
+    }
+  }, [dispatch, isAuthenticated]);
+
   const handleParticipate = async (activityId: number) => {
     try {
-      const response = await axios.put(`/api/activity/${activityId}/add-user`, null, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Assuming the token is in localStorage
-        },
-      });
+      const response = await axios.put(
+        `/api/activity/${activityId}/add-user`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (response.status === 200) {
         alert("Successfully registered for the activity!");
+        setUserRegisteredActivities((prev) => new Set([...prev, activityId]));
       }
     } catch (error) {
       console.error("Error registering for activity:", error);
@@ -36,9 +68,42 @@ const ActivityList: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(getActivities());
-  }, [dispatch]);
+  const [loading, setLoading] = useState(false);
+
+  const handleRevokeParticipation = async (activityId: number) => {
+    setLoading(true);
+    try {
+      const response = await axios.delete(
+        `/api/activity/${activityId}/remove-user`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        alert("You have successfully revoked your participation!");
+        setUserRegisteredActivities((prev) => {
+          const updatedSet = new Set(prev);
+          updatedSet.delete(activityId);
+          return updatedSet;
+        });
+      }
+    } catch (error) {
+      console.error("Error revoking participation:", error);
+      alert("Failed to revoke your participation. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  <button
+    className={`${buttonStyles.button} ${styles.revokeButton}`}
+    onClick={() => handleRevokeParticipation(activity.id)}
+    disabled={loading}
+  >
+    {loading ? "Revoking..." : "Revoke Participation"}
+  </button>;
 
   return (
     <>
@@ -65,8 +130,7 @@ const ActivityList: React.FC = () => {
               <p className={styles.activityStartDate}>
                 Start: {activity.startDate}
               </p>
-              
-             
+
               <Link
                 to={`/activityList/${activity.id}`}
                 state={{ activity }}
@@ -76,13 +140,25 @@ const ActivityList: React.FC = () => {
                 More
               </Link>
 
-              
-              <button
-                className={`${buttonStyles.button} ${styles.participateButton}`}
-                onClick={() => handleParticipate(activity.id)}
-              >
-                Participate
-              </button>
+              {isAuthenticated && (
+                <>
+                  {!userRegisteredActivities.has(activity.id) ? (
+                    <button
+                      className={`${buttonStyles.button} ${styles.participateButton}`}
+                      onClick={() => handleParticipate(activity.id)}
+                    >
+                      Participate
+                    </button>
+                  ) : (
+                    <button
+                      className={`${buttonStyles.button} ${styles.revokeButton}`}
+                      onClick={() => handleRevokeParticipation(activity.id)}
+                    >
+                      Revoke Participation
+                    </button>
+                  )}
+                </>
+              )}
             </div>
           ))
         ) : (
