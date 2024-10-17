@@ -13,7 +13,8 @@ import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { getUserWithToken } from "./components/auth/features/authAction";
 import ActivityDetail from "./components/activityDetail/ActivityDetail";
 import { Footer } from "./components/footer/Footer";
-import ProjectCreators from "./components/projectCreators/projectCreators";
+import ProjectCreators from "./components/projectCreators/ProjectCreators";
+import RegistrationConfirmed from "./components/registrationConfirm/RegistrationConfirmed";
 
 
 
@@ -29,6 +30,7 @@ const App = () => {
     <UserProvider>
       <HashRouter>
         <Routes>
+        <Route path="/registration-confirmed" element={<RegistrationConfirmed />} />
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="/homePage" element={<HomePage />} />
