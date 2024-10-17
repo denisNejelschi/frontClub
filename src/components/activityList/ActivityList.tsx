@@ -7,7 +7,7 @@ import SearchBar from "../searchBar/SearchBar";
 import ScrollToTopButton from "../scrollToTopButton/ScrollToTopButton";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { getActivities } from "../auth/reduxActivities/reduxActivitiesAction";
-
+//comment for testing
 interface IActivity {
   id: number;
   title: string;
@@ -117,6 +117,7 @@ const ActivityList: React.FC = () => {
         </Link>
       </div>
       <SearchBar onFiltered={setFilteredActivities} />
+      
       <div className={styles.activityListContainer}>
         {filteredActivities.length > 0 ? (
           filteredActivities.map((activity) => (
