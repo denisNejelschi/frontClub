@@ -122,7 +122,7 @@ const ActivityList: React.FC = () => {
                       Participate
                     </button>
                   ) : (
-                    // Only show revoke button if the user is registered for the activity
+                   
                     userRegisteredActivities.has(activity.id) && (
                       <button
                         className={`${buttonStyles.button} ${styles.revokeButton}`}
