@@ -20,7 +20,7 @@ const ActivityList: React.FC = () => {
   const [filteredActivities, setFilteredActivities] = useState<IActivity[]>([]);
   const [userRegisteredActivities, setUserRegisteredActivities] = useState<Set<number>>(new Set());
   const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
-  const userRole = useAppSelector((state) => state.user.role); // Assuming 'role' exists in your user state
+  const userRole = useAppSelector((state) => state.user.role); 
   const [loading, setLoading] = useState(false);
 
   const fetchRegisteredActivities = async () => {
