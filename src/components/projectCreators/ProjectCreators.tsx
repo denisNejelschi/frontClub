@@ -7,6 +7,7 @@ interface IParticipant {
   lastName: string;
   specialization: string;
   photo: string; 
+  linkedin: string;
 }
 
 const ProjectCreators: React.FC = () => {
@@ -17,6 +18,7 @@ const ProjectCreators: React.FC = () => {
       lastName: "Versina",
       specialization: "FrontEnd",
       photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Xnp5sqAeZx9FlQUlmKKQwXFj977Cx-9TIw&s", 
+      linkedin: "https://www.linkedin.com/in/vasile-versina-706a1b333"
     },
     {
       id: 2,
@@ -24,6 +26,7 @@ const ProjectCreators: React.FC = () => {
       lastName: "Matsveyenka",
       specialization: "FrontEnd",
       photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Xnp5sqAeZx9FlQUlmKKQwXFj977Cx-9TIw&s", 
+      linkedin: "https://www.linkedin.com/in/maryna-matsveyenka"
     },
     {
       id: 3,
@@ -31,6 +34,7 @@ const ProjectCreators: React.FC = () => {
       lastName: "Nejelschi",
       specialization: "BackEnd",
       photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Xnp5sqAeZx9FlQUlmKKQwXFj977Cx-9TIw&s", 
+      linkedin:"https://www.linkedin.com/in/denis-nejelschi-3b484337"
     },
     {
       id: 4,
@@ -38,6 +42,7 @@ const ProjectCreators: React.FC = () => {
       lastName: "Iurciuc",
       specialization: "BackEnd",
       photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Xnp5sqAeZx9FlQUlmKKQwXFj977Cx-9TIw&s", 
+      linkedin:"https://www.linkedin.com/in/boris-iurciuc-44000259"
     },
     {
       id: 5,
@@ -45,6 +50,7 @@ const ProjectCreators: React.FC = () => {
       lastName: "Kovtun",
       specialization: "FrontEnd",
       photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Xnp5sqAeZx9FlQUlmKKQwXFj977Cx-9TIw&s", 
+      linkedin:"https://www.linkedin.com"
     },
     {
       id: 6,
@@ -52,6 +58,7 @@ const ProjectCreators: React.FC = () => {
       lastName: "Heinrich",
       specialization: "BackEnd",
       photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Xnp5sqAeZx9FlQUlmKKQwXFj977Cx-9TIw&s", 
+      linkedin:"https://www.linkedin.com"
     },
   ];
 
@@ -70,6 +77,14 @@ const ProjectCreators: React.FC = () => {
             />
             <h3>{`${participant.firstName} ${participant.lastName}`}</h3>
             <p>Specialization: {participant.specialization}</p>
+            <a 
+              href={participant.linkedin} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className={styles.linkedinLink}
+            >
+              LinkedIn Profile
+            </a>
           </div>
         ))}
       </div>
