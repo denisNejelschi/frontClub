@@ -13,8 +13,11 @@ import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { getUserWithToken } from "./components/auth/features/authAction";
 import ActivityDetail from "./components/activityDetail/ActivityDetail";
 import { Footer } from "./components/footer/Footer";
-import ProjectCreators from "./components/projectCreators/ProjectCreators";
-import RegistrationConfirmed from "./components/registrationConfirm/RegistrationConfirmed";
+
+import ProjectCreators from "./components/projectCreators/ProjectCreators.tsx";
+import DashBoard from "./components/dashBoard/DashBoard.tsx";
+
+
 
 
 
@@ -46,6 +49,7 @@ const App = () => {
               }
             />
             <Route path="/activityList/:id" element={<ActivityDetail />} />
+            <Route path="/dashBoard" element={<DashBoard />} />
             <Route
               path="/school"
               element={<ProtectedRoute component={<School />} />}

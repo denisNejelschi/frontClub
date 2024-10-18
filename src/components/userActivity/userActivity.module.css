@@ -1,0 +1,74 @@
+.activityContainer {
+    display: flex;
+    justify-content: space-between; /* Разделяет активности на две стороны */
+    width: 100%;
+    padding: 20px;
+}
+
+.activityUserContainer {
+    flex: 1; /* Каждая колонка занимает равное пространство */
+    margin-right: 20px; /* Отступ между колонками */
+    max-width: 50%; /* Ограничиваем максимальную ширину каждой колонки */
+}
+
+.activityUserContainer:last-child {
+    margin-right: 0; /* Убираем отступ у правой колонки */
+}
+
+.sectionTitle {
+    font-size: 1.6rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    padding: 20px;
+}
+
+.error {
+    text-align: center;
+    font-size: 1.2rem;
+    color: red;
+    padding: 20px;
+}
+
+.noResults {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #999;
+    padding: 20px;
+}
+
+/* Добавленные стили для уменьшения размера карточек активности */
+.activityList {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.75rem; /* Уменьшенное значение отступов внутри карточки */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    width: 100%; /* Задает 100% ширины для карточки */
+    margin-bottom: 20px; /* Расстояние между элементами */
+    max-width: 300px; /* Установка максимальной ширины карточки */
+    margin: 0 auto; /* Центрирует карточки */
+}
+
+/* Отступы между карточками */
+.activityList + .activityList {
+    margin-top: 20px; /* Отступ между карточками */
+}
+
+.activityList:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.activityImage {
+    max-width: 100%; /* Изображение растягивается на всю ширину карточки */
+    height: auto; /* Автоматическая высота для сохранения пропорций */
+    border-radius: 5px;
+}

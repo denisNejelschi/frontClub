@@ -27,7 +27,8 @@ export const Header: React.FC = () => {
       </div>
       <nav className={styles.navbar}>
         <div className={styles.navLinks}>
-        <span className={styles.username}>{user?.username}</span>
+        {/*<span className={styles.username}>{user?.username}</span>*/}
+
           {links(isAuthenticated).map((link) => (
             <Link
               key={link.pathname}
@@ -42,8 +43,11 @@ export const Header: React.FC = () => {
         </div>
         {isAuthenticated ? (
           <div className={styles.signOut}>
+            <Link to="/dashboard">
+              <span className={styles.username}>{user?.username}</span>
+            </Link>
             <Link onClick={handleLogout} to="/">
-              Sign out
+            Sign out
             </Link>
           </div>
         ) : (

@@ -9,6 +9,7 @@ interface IActivity {
     startDate: string;
     description: string;
     address: string;
+    authorId: number;
 }
 
 interface SearchBarProps {
