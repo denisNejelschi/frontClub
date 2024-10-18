@@ -34,7 +34,7 @@ const UserActivity: React.FC = () => {
             });
             setUserActivities(response.data);
         } catch (error) {
-            setError("Error loading the assets. Please try again later.");
+            setError("Error loading created activities. Please try again later.");
             console.error("Error fetching user activities:", error);
         } finally {
             setLoading(false);
@@ -42,7 +42,6 @@ const UserActivity: React.FC = () => {
     };
 
     const fetchSubscribedActivities = async () => {
-        setLoading(true);
         try {
             const response = await axios.get("/api/activity/my-activities", {
                 headers: {
@@ -53,8 +52,6 @@ const UserActivity: React.FC = () => {
         } catch (error) {
             setError("Error loading subscribed activities. Please try again later.");
             console.error("Error fetching subscribed activities:", error);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -87,18 +84,18 @@ const UserActivity: React.FC = () => {
 
         setUnsubscribing(activityId);
         try {
-            await axios.delete(`/api/activity/unsubscribe/${activityId}`, {
+            await axios.delete(`/api/activity/${activityId}/remove-user`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
             });
-            alert("Successfully unsubscribed from the activity.");
+            alert("Unsubscribed successfully.");
             setSubscribedActivities((prevActivities) =>
                 prevActivities.filter((activity) => activity.id !== activityId)
             );
         } catch (error) {
             console.error("Error unsubscribing from activity:", error);
-            alert("Failed to unsubscribe from the activity. Please try again.");
+            alert("Failed to unsubscribe. Please try again.");
         } finally {
             setUnsubscribing(null);
         }
@@ -112,21 +109,18 @@ const UserActivity: React.FC = () => {
     }, [isAuthenticated]);
 
     if (loading) {
-        return <div className={styles.loading}>Loading...</div>;
+        return <div>Loading...</div>;
     }
 
     if (error) {
-        return <div className={styles.error}>{error}</div>;
+        return <div>{error}</div>;
     }
 
     return (
         <>
-            <div className={styles.headerContainer}>
-                <h2 className={styles.pageTitle}>Your Activities</h2>
-            </div>
             <div className={styles.activityContainer}>
                 <div className={styles.activityUserContainer}>
-                    <h3 className={styles.sectionTitle}>Created Activities</h3>
+                    <h2 className={styles.sectionTitle}>Your Created Activities</h2>
                     {userActivities.length > 0 ? (
                         userActivities.map((activity) => (
                             <div key={activity.id} className={styles.activityList}>
@@ -165,7 +159,7 @@ const UserActivity: React.FC = () => {
                 </div>
 
                 <div className={styles.activityUserContainer}>
-                    <h3 className={styles.sectionTitle}>Subscribed Activities</h3>
+                    <h2 className={styles.sectionTitle}>Subscribed Activities</h2>
                     {subscribedActivities.length > 0 ? (
                         subscribedActivities.map((activity) => (
                             <div key={activity.id} className={styles.activityList}>
