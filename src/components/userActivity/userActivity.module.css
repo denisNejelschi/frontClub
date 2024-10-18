@@ -1,0 +1,62 @@
+.activityUserContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.activityList {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.activityList:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.activityImage {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.activityTitle {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.activityDescription {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+.activityStartDate {
+    font-size: 0.85rem;
+    color: #999;
+    margin-top: 0.25rem;
+}
+
+.activityList button, .activityList a {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    cursor: pointer;
+    margin: 10px auto;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color;
+}
