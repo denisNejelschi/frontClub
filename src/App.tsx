@@ -6,52 +6,58 @@ import Register from "./components/auth/Register";
 import HomePage from "./components/homePages/HomePage";
 import Layout from "./components/layout/Layout";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
-import School from "./components/school/school";
 import { UserProvider } from "./components/userContext/UserContext";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { getUserWithToken } from "./components/auth/features/authAction";
 import ActivityDetail from "./components/activityDetail/ActivityDetail";
 import { Footer } from "./components/footer/Footer";
-import ProjectCreators from "./components/projectCreators/projectCreators";
-
-
-
-
+import ProjectCreators from "./components/projectCreators/ProjectCreators";
+import AdminPanel from "./components/adminPanel/AdminPanel";
+// Добавлены необходимые импорты
+import UserList from "./components/adminPanel/UserList";
+import NewsList from "./components/news/NewsList";
+import School from "./components/school/School";
 
 const App = () => {
   const isAuthenticated = useAppSelector((store) => store.user.isAuthenticated);
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(getUserWithToken());
   }, [dispatch, isAuthenticated]);
+
   return (
     <UserProvider>
       <HashRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
-            <Route path="/homePage" element={<HomePage />} />
-            <Route path="/activityList" element={<ActivityList />} />
+            <Route path="homePage" element={<HomePage />} />
+            <Route path="activityList" element={<ActivityList />} />
             <Route
-              path="/activityList/addActivity"
-              element={
-                <AddActivityForm
-                  onSuccess={function (): void {
-                    throw new Error("Function not implemented.");
-                  }}
-                />
-              }
+              path="activityList/addActivity"
+              element={<AddActivityForm onSuccess={() => {}} />}
             />
-            <Route path="/activityList/:id" element={<ActivityDetail />} />
+            <Route path="activityList/:id" element={<ActivityDetail />} />
             <Route
-              path="/school"
+              path="school"
               element={<ProtectedRoute component={<School />} />}
             />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-            <Route  path="/projectCreators" element={<ProjectCreators/>} />
+            <Route path="projectCreators" element={<ProjectCreators />} />
             <Route path="*" element={<h1>Error 404 😵</h1>} />
+          </Route>
+
+          {/* Панель администратора с защищенными маршрутами */}
+          <Route
+            path="/admin"
+            element={<ProtectedRoute component={<AdminPanel />} />}
+          >
+            <Route path="users" element={<UserList />} />
+            <Route path="activities" element={<ActivityList />} />
+            <Route path="news" element={<NewsList />} />
           </Route>
         </Routes>
         <Footer />

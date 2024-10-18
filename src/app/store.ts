@@ -2,6 +2,7 @@ import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import authSlice from "../components/auth/features/authSlice";
 import reduxActivitiesSlice from "../components/auth/reduxActivities/reduxActivitiesSlice";
 
+
 export const store = configureStore({
   reducer: {
     reduxActivities: reduxActivitiesSlice.reducer,

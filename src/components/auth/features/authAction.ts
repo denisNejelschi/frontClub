@@ -3,6 +3,22 @@ import axios, { AxiosResponse } from "axios";
 import { ITokenDto, IUser, IUserData } from "./authSlice";
 import { ILoginFormValues } from "../Login";
 
+export const fetchAllUsers = createAsyncThunk<
+  IUser[],
+  void,
+  { rejectValue: string }
+>("admin/fetchAllUsers", async (_, thunkAPI) => {
+  try {
+    const response: AxiosResponse<IUser[]> = await axios.get("/api/users");
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+    return thunkAPI.rejectWithValue("An unexpected error occurred");
+  }
+});
+
 export const loginUser = createAsyncThunk<
   ITokenDto,
   ILoginFormValues,
@@ -78,7 +94,7 @@ export const resetPassword = createAsyncThunk<
   { rejectValue: string }
 >("auth/resetPassword", async ({ email }, thunkAPI) => {
   try {
-    await axios.post("http://localhost:8080/user/reset-password", { email });
+    await axios.post("/api/user/reset-password", { email });
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return thunkAPI.rejectWithValue(error.message);

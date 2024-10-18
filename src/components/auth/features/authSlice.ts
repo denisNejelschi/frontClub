@@ -30,6 +30,17 @@ interface IUserState {
   isAuthenticated: boolean;
 }
 
+export interface ILoginFormValues {
+  username: string;
+  password: string;
+}
+
+export interface IRegisterFormValues {
+  username: string;
+  password: string;
+  email: string;
+}
+
 const initialState: IUserState = {
   user: undefined,
   isLoading: false,
@@ -55,9 +66,10 @@ export const authSlice = createSlice({
         state.isLoading = true;
         state.error = "";
       })
-      .addCase(loginUser.fulfilled, (state) => {
+      .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isAuthenticated = true;
+        state.user = action.payload;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;

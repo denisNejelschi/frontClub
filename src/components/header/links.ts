@@ -12,7 +12,7 @@ export const links = (isAuthenticated: boolean): ILink[] => {
     {
       pathname: '/activityList',
       title: 'Courses',
-    },
+    }
   ];
 
   if (isAuthenticated) {
@@ -22,5 +22,16 @@ export const links = (isAuthenticated: boolean): ILink[] => {
     });
   }
 
+  baseLinks.push({
+    pathname: '/news',
+    title: 'News',
+  });
+
+  if (isAuthenticated && localStorage.getItem('role') === 'admin') {
+    baseLinks.push({
+      pathname: '/adminPanel',
+      title: 'Admin Panel',
+    });
+  }
   return baseLinks;
 };
