@@ -1,20 +1,65 @@
-.activityUserContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+.activityContainer {
+    display: flex;
+    justify-content: space-between; /* Разделяет активности на две стороны */
     width: 100%;
-    margin: 0 auto;
-    padding: 0 20px;
+    padding: 20px;
 }
 
+.activityUserContainer {
+    flex: 1; /* Каждая колонка занимает равное пространство */
+    margin-right: 20px; /* Отступ между колонками */
+    max-width: 50%; /* Ограничиваем максимальную ширину каждой колонки */
+}
+
+.activityUserContainer:last-child {
+    margin-right: 0; /* Убираем отступ у правой колонки */
+}
+
+.sectionTitle {
+    font-size: 1.6rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    padding: 20px;
+}
+
+.error {
+    text-align: center;
+    font-size: 1.2rem;
+    color: red;
+    padding: 20px;
+}
+
+.noResults {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #999;
+    padding: 20px;
+}
+
+/* Добавленные стили для уменьшения размера карточек активности */
 .activityList {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 1rem;
+    padding: 0.75rem; /* Уменьшенное значение отступов внутри карточки */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
+    width: 100%; /* Задает 100% ширины для карточки */
+    margin-bottom: 20px; /* Расстояние между элементами */
+    max-width: 300px; /* Установка максимальной ширины карточки */
+    margin: 0 auto; /* Центрирует карточки */
+}
+
+/* Отступы между карточками */
+.activityList + .activityList {
+    margin-top: 20px; /* Отступ между карточками */
 }
 
 .activityList:hover {
@@ -23,40 +68,7 @@
 }
 
 .activityImage {
-    max-width: 100%;
-    height: auto;
+    max-width: 100%; /* Изображение растягивается на всю ширину карточки */
+    height: auto; /* Автоматическая высота для сохранения пропорций */
     border-radius: 5px;
-}
-
-.activityTitle {
-    margin-top: 1rem;
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #333;
-}
-
-.activityDescription {
-    margin-top: 0.5rem;
-    font-size: 0.95rem;
-    color: #666;
-    line-height: 1.4;
-}
-
-.activityStartDate {
-    font-size: 0.85rem;
-    color: #999;
-    margin-top: 0.25rem;
-}
-
-.activityList button, .activityList a {
-    display: inline-block;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    cursor: pointer;
-    margin: 10px auto;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: background-color;
 }
