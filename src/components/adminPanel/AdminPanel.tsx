@@ -28,6 +28,12 @@ const AdminPanel: React.FC = () => {
           <li>
             <Link to="/admin/activitiesTypes">Manage Activities Types</Link>
           </li>
+          <li>
+            <Link to="/admin/activitiesStatuses">Manage Activities Statuses</Link>
+          </li>
+          <li>
+            <Link to="/admin/activitiesCategories">Manage Activities Categories</Link>
+          </li>
         </ul>
       </nav>
       

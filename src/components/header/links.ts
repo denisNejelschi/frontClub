@@ -3,7 +3,7 @@ export interface ILink {
   title: string;
 }
 
-export const links = (isAuthenticated: boolean): ILink[] => {
+export const links = (isAuthenticated: boolean, isAdmin: boolean): ILink[] => {
   const baseLinks: ILink[] = [
     {
       pathname: '/',
@@ -12,26 +12,26 @@ export const links = (isAuthenticated: boolean): ILink[] => {
     {
       pathname: '/activityList',
       title: 'Courses',
-    }
+    },
   ];
 
+  // Ссылки для аутентифицированных пользователей
   if (isAuthenticated) {
     baseLinks.push({
       pathname: '/school',
       title: 'School',
-    });
+    }
+  );
+
+
+    // Если пользователь администратор, добавляем ссылку на панель администратора
+    if (isAdmin) {
+      baseLinks.push({
+        pathname: '/admin',
+        title: 'Admin Panel',
+      });
+    }
   }
 
-  baseLinks.push({
-    pathname: '/news',
-    title: 'News',
-  });
-
-  if (isAuthenticated && localStorage.getItem('role') === 'admin') {
-    baseLinks.push({
-      pathname: '/adminPanel',
-      title: 'Admin Panel',
-    });
-  }
   return baseLinks;
 };

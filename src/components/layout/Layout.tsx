@@ -1,28 +1,31 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks"; 
 import { getActivities } from "../auth/reduxActivities/reduxActivitiesAction";
 import { Header } from "../header/Header";
+import { links } from "../header/links";
 import styles from "../layout/layout.module.css";
 
 export default function Layout() {
   const dispatch = useAppDispatch();
+  
+  // Используем переменные
+  const isAuthenticated = useAppSelector((store) => store.user.isAuthenticated);
+  const isAdmin = useAppSelector((store) => store.user.isAdmin);
+
+  // Получаем ссылки на основе состояния пользователя
+  const userLinks = links(isAuthenticated, isAdmin); // Здесь используется isAuthenticated
 
   useEffect(() => {
-    // забираем token из браузерного хранилища
     const token = localStorage.getItem("token");
-    // если токен не null (то есть существует)
-    // делаем запрос за данными юзера с этим токеном
     if (token !== null) {
-      // отправляем запрос из redux
-      // dispatch(getUserWithToken(token));
       dispatch(getActivities());
     }
   }, [dispatch]);
 
   return (
     <div className={styles.page}>
-      <Header />
+      <Header userLinks={userLinks} /> {/* Передаем ссылки в Header */}
       <main className={styles.main}>
         <Outlet />
       </main>

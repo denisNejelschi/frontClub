@@ -8,7 +8,7 @@ export const fetchAllUsers = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("/api/users", {
+      const response = await axios.get<IUser[]>("/api/users", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -20,65 +20,10 @@ export const fetchAllUsers = createAsyncThunk(
   }
 );
 
-// Удаление пользователя (доступно администратору)
-export const deleteUser = createAsyncThunk(
-  "admin/deleteUser",
-  async (userId: number, { rejectWithValue }) => {
-    try {
-      const token = localStorage.getItem("token");
-      // Поскольку при удалении пользователь может не возвращать тело ответа, проверим на это
-      await axios.delete(`/api/users/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return userId; // Возвращаем ID удаленного пользователя
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || "Failed to delete user");
-    }
-  }
-);
-
-// Обновление данных пользователя (доступно администратору или пользователю)
-export const updateUser = createAsyncThunk(
-  "admin/updateUser",
-  async ({ id, userData }: { id: number; userData: Partial<IUser> }, { rejectWithValue }) => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.put(`/api/users/${id}`, userData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || "Failed to update user");
-    }
-  }
-);
-
-// Получение пользователя (доступно администратору или пользователю)
-export const getUser = createAsyncThunk(
-  "admin/getUser",
-  async (userId: number, { rejectWithValue }) => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(`/api/users/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || "Failed to fetch user");
-    }
-  }
-);
-
 // Создание пользователя (доступно администратору)
 export const createUser = createAsyncThunk(
   "admin/createUser",
-  async (userData: { username: string; password: string; email: string }, { rejectWithValue }) => {
+  async (userData: Partial<IUser>, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post("/api/users", userData, {
@@ -93,20 +38,57 @@ export const createUser = createAsyncThunk(
   }
 );
 
-// Обновление профиля пользователя (доступно администратору или пользователю)
-export const updateUserProfile = createAsyncThunk(
-  "admin/updateUserProfile",
-  async (userData: { username: string; email: string }, { rejectWithValue }) => {
+//Получение информации о конкретном пользователе по его ID
+export const getUserById = createAsyncThunk(
+  "admin/getUserById",
+  async (_userId: number, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.put("/api/users/profile", userData, {
+      const response = await axios.get<IUser>(`/api/users/{id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || "Failed to update user profile");
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch user");
+    }
+  }
+);
+
+// Удаление пользователя (доступно администратору)
+export const deleteUser = createAsyncThunk(
+  "admin/deleteUser",
+  async (userId: number, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`/api/users/{id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return userId;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || "Failed to delete user");
+    }
+  }
+);
+
+
+// Обновление данных пользователя (доступно администратору или пользователю)
+export const updateUser = createAsyncThunk(
+  "admin/updateUser",
+  async ({ id, data }: { id: number; data: Partial<IUser> }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.put(`/api/users/{id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || "Failed to update user");
     }
   }
 );

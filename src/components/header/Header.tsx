@@ -4,14 +4,18 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Link, useLocation } from "react-router-dom";
 import { logoutUser } from "../auth/features/authSlice";
 import { cleanActivities } from "../auth/reduxActivities/reduxActivitiesSlice";
-import { links } from "./links";
+import { links } from "./links"; // Импортируем функцию links
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+  isAdmin: boolean;
+}
+
+export const Header: React.FC<HeaderProps> = ({ isAdmin }) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
 
   const { user } = useAppSelector((store) => store.user);
-  const isAuthenticated = Boolean(user?.username);
+  const isAuthenticated = Boolean(user?.username); // Используем переменную
 
   const handleLogout = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
@@ -20,6 +24,8 @@ export const Header: React.FC = () => {
     window.location.href = "/";
   };
 
+  const userLinks = links(isAuthenticated, isAdmin); // Используем переменную здесь
+  
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
@@ -27,8 +33,8 @@ export const Header: React.FC = () => {
       </div>
       <nav className={styles.navbar}>
         <div className={styles.navLinks}>
-        <span className={styles.username}>{user?.username}</span>
-          {links(isAuthenticated).map((link) => (
+          <span className={styles.username}>{user?.username}</span>
+          {userLinks.map((link) => (
             <Link
               key={link.pathname}
               className={
@@ -39,6 +45,12 @@ export const Header: React.FC = () => {
               {link.title}
             </Link>
           ))}
+
+          {isAdmin && (
+            <Link to="/admin" className={styles.adminLink}>
+              Admin Panel
+            </Link>
+          )}
         </div>
         {isAuthenticated ? (
           <div className={styles.signOut}>

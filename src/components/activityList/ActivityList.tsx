@@ -7,7 +7,7 @@ import SearchBar from "../searchBar/SearchBar";
 import ScrollToTopButton from "../scrollToTopButton/ScrollToTopButton";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { getActivities } from "../auth/reduxActivities/reduxActivitiesAction";
-//comment for testing
+
 interface IActivity {
   id: number;
   title: string;
@@ -18,22 +18,19 @@ interface IActivity {
 const ActivityList: React.FC = () => {
   const dispatch = useAppDispatch();
   const [filteredActivities, setFilteredActivities] = useState<IActivity[]>([]);
-  const [userRegisteredActivities, setUserRegisteredActivities] = useState<
-    Set<number>
-  >(new Set());
+  const [userRegisteredActivities, setUserRegisteredActivities] = useState<Set<number>>(new Set());
   const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
+  const userRole = useAppSelector((state) => state.user.role); 
+  const [loading, setLoading] = useState(false);
 
   const fetchRegisteredActivities = async () => {
     try {
-      const response = await axios.get(
-        "/api/activity/user/registered-activities",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      const registeredActivities = new Set(response.data);
+      const response = await axios.get("/api/activity/user/registered-activities", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const registeredActivities = new Set<number>(response.data);
       setUserRegisteredActivities(registeredActivities);
     } catch (error) {
       console.error("Error fetching registered activities:", error);
@@ -49,15 +46,11 @@ const ActivityList: React.FC = () => {
 
   const handleParticipate = async (activityId: number) => {
     try {
-      const response = await axios.put(
-        `/api/activity/${activityId}/add-user`,
-        null,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.put(`/api/activity/${activityId}/add-user`, null, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       if (response.status === 200) {
         alert("Successfully registered for the activity!");
         setUserRegisteredActivities((prev) => new Set([...prev, activityId]));
@@ -68,19 +61,14 @@ const ActivityList: React.FC = () => {
     }
   };
 
-  const [loading, setLoading] = useState(false);
-
   const handleRevokeParticipation = async (activityId: number) => {
     setLoading(true);
     try {
-      const response = await axios.delete(
-        `/api/activity/${activityId}/remove-user`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.delete(`/api/activity/${activityId}/remove-user`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       if (response.status === 200) {
         alert("You have successfully revoked your participation!");
         setUserRegisteredActivities((prev) => {
@@ -97,40 +85,23 @@ const ActivityList: React.FC = () => {
     }
   };
 
-  <button
-    className={`${buttonStyles.button} ${styles.revokeButton}`}
-    onClick={() => handleRevokeParticipation(activity.id)}
-    disabled={loading}
-  >
-    {loading ? "Revoking..." : "Revoke Participation"}
-  </button>;
-
   return (
     <>
       <div className={styles.headerContainer}>
         <h2 className={styles.pageTitle}>Activity</h2>
-        <Link
-          to="addActivity"
-          className={`${buttonStyles.button} ${styles.addButton}`}
-        >
+        <Link to="addActivity" className={`${buttonStyles.button} ${styles.addButton}`}>
           Add activity
         </Link>
       </div>
       <SearchBar onFiltered={setFilteredActivities} />
-      
+
       <div className={styles.activityListContainer}>
         {filteredActivities.length > 0 ? (
           filteredActivities.map((activity) => (
             <div key={activity.id} className={styles.activityList}>
-              <img
-                src={activity.image}
-                alt={activity.title}
-                className={styles.activityImage}
-              />
+              <img src={activity.image} alt={activity.title} className={styles.activityImage} />
               <h3 className={styles.activityTitle}>{activity.title}</h3>
-              <p className={styles.activityStartDate}>
-                Start: {activity.startDate}
-              </p>
+              <p className={styles.activityStartDate}>Start: {activity.startDate}</p>
 
               <Link
                 to={`/activityList/${activity.id}`}
@@ -151,21 +122,23 @@ const ActivityList: React.FC = () => {
                       Participate
                     </button>
                   ) : (
-                    <button
-                      className={`${buttonStyles.button} ${styles.revokeButton}`}
-                      onClick={() => handleRevokeParticipation(activity.id)}
-                    >
-                      Revoke Participation
-                    </button>
+                   
+                    userRegisteredActivities.has(activity.id) && (
+                      <button
+                        className={`${buttonStyles.button} ${styles.revokeButton}`}
+                        onClick={() => handleRevokeParticipation(activity.id)}
+                        disabled={loading}
+                      >
+                        {loading ? "Revoking..." : "Revoke Participation"}
+                      </button>
+                    )
                   )}
                 </>
               )}
             </div>
           ))
         ) : (
-          <div className={styles.noResults}>
-            No activities match the search query.
-          </div>
+          <div className={styles.noResults}>No activities match the search query.</div>
         )}
       </div>
       <ScrollToTopButton />

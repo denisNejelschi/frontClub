@@ -24,6 +24,7 @@ export interface ITokenDto {
 }
 
 interface IUserState {
+  [x: string]: any;
   user: IUser|undefined;
   isLoading: boolean;
   error: string;
