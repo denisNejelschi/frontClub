@@ -1,15 +1,20 @@
-import { Navigate } from "react-router-dom"
-import { useAppSelector } from "../../app/hooks"
+import { Navigate } from "react-router-dom";
+import { useAppSelector } from "../../app/hooks";
 
-
-
-interface IPops {
-    component: JSX.Element
+interface IProps {
+  element: JSX.Element; // Изменяем 'component' на 'element' для стандартного подхода
 }
-export default function ProtectedRoute({ component }: IPops) {
-    const { user } = useAppSelector(store => store.user)
-    if (user.username) {
-        return  component
-    }
-    return ( <Navigate to="/login"/>)
-}
+
+const ProtectedRoute: React.FC<IProps> = ({ element }) => {
+  const { user } = useAppSelector((store) => store.user);
+
+  // Проверяем, аутентифицирован ли пользователь
+  if (user && user.username) {
+    return element;
+  }
+
+  // Если не аутентифицирован, перенаправляем на страницу входа
+  return <Navigate to="/login" />;
+};
+
+export default ProtectedRoute;

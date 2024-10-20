@@ -7,7 +7,8 @@ import Input from '../input/Input';
 import styles from './auth.module.css';
 import { useState } from 'react';
 import Loader from '../loader/Loader';
-import { loginUser } from './features/authAction';
+import { loginUser, loginAdmin } from './features/authAction'; // Добавили экшен для логина администратора
+
 
 export interface ILoginFormValues {
   username: string;
@@ -43,19 +44,33 @@ export default function Login() {
       setErrorMessage('');
       setSuccessMessage('');
       try {
-        const response = await dispatch(loginUser({
-          username: values.username,
-          password: values.password,
-        })).unwrap();
+        let response;
+        // Проверяем, является ли пользователь администратором
+        if (values.username === 'admin') {
+          // Если пользователь — администратор, используем экшен для логина администратора
+          response = await dispatch(loginAdmin({
+            username: values.username,
+            password: values.password,
+          })).unwrap();
+          
+          console.log('Admin login response:', response);
+          localStorage.setItem('admin-token', response.token);
+          setSuccessMessage('Вход администратора прошел успешно!');
+          navigate('/adminPanel'); // Перенаправляем на админ-панель
+        } else {
+          // Если пользователь — обычный, используем экшен для логина пользователя
+          response = await dispatch(loginUser({
+            username: values.username,
+            password: values.password,
+          })).unwrap();
 
-        console.log('Login response:', response);
-        
-        localStorage.setItem('club-token', response.token);
-        
-        setSuccessMessage('Вход прошел успешно!'); 
-        navigate('/'); 
+          console.log('Login response:', response);
+          localStorage.setItem('club-token', response.token);
+          setSuccessMessage('Вход прошел успешно!');
+          navigate('/'); // Перенаправляем на главную
+        }
       } catch (error) {
-        const errorMsg = typeof error === 'string' ? error : "Вход не удался. Попробуйте снова.";
+        const errorMsg = typeof error === 'string' ? error : 'Вход не удался. Попробуйте снова.';
         setErrorMessage(errorMsg);
         console.error(error);
       } finally {
@@ -76,23 +91,23 @@ export default function Login() {
             {successMessage && <div className={styles.success}>{successMessage}</div>}
           </div>
           <Input
-            name='username'
-            placeholder='Username'
-            type='text'
+            name="username"
+            placeholder="Username"
+            type="text"
             error={formik.errors.username}
             value={formik.values.username}
             onChange={formik.handleChange}
           />
           <Input
-            name='password'
-            placeholder='Пароль' 
-            type='password'
+            name="password"
+            placeholder="Пароль"
+            type="password"
             error={formik.errors.password}
             value={formik.values.password}
             onChange={formik.handleChange}
           />
-          <Button type='submit' name='Войти' disabled={loading} />
-          <Link to='/register' className={styles.link}>Create account</Link>
+          <Button type="submit" name="Войти" disabled={loading} />
+          <Link to="/register" className={styles.link}>Create account</Link>
         </form>
       )}
     </div>

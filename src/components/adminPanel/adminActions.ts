@@ -2,6 +2,25 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { IUser } from "../auth/features/authSlice";
 
+// Интерфейс для параметров авторизации
+interface LoginPayload {
+  username: string;
+  password: string;
+}
+
+// Асинхронное действие для входа
+export const login = createAsyncThunk(
+  "admin/login",
+  async (payload: LoginPayload, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/api/admin/login", payload); // Ваш API эндпоинт для логина администратора
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 // Получение всех пользователей (доступно администратору)
 export const fetchAllUsers = createAsyncThunk(
   "admin/fetchAllUsers",
@@ -16,6 +35,23 @@ export const fetchAllUsers = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || "Failed to fetch users");
+    }
+  }
+);
+
+export const getUser = createAsyncThunk(
+  "admin/getUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get<IUser>("/api/users", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch user");
     }
   }
 );

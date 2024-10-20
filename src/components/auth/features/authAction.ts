@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import { ITokenDto, IUser, IUserData } from "./authSlice";
 import { ILoginFormValues } from "../Login";
 
+
 export const fetchAllUsers = createAsyncThunk<
   IUser[],
   void,
@@ -102,3 +103,15 @@ export const resetPassword = createAsyncThunk<
     return thunkAPI.rejectWithValue("An unexpected error occurred");
   }
 });
+
+export const loginAdmin = createAsyncThunk(
+  'auth/loginAdmin',
+  async (credentials: { username: string; password: string }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post('/api/admin/login', credentials);
+      return response.data; // Предполагается, что ответ содержит токен и другую информацию
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

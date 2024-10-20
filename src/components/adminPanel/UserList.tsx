@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser, fetchAllUsers } from "./adminActions";
-import { RootState } from "../../app/store";
+import { RootState, AppDispatch } from "../../app/store"; // Импортируйте типы
 
 
 const UserList: React.FC = () => {
-  const dispatch = useDispatch();
-  const { users, isLoading, error } = useSelector((state: RootState) => state.admin);
+  const dispatch: AppDispatch = useDispatch(); // Используем AppDispatch для типизации dispatch
+  const { users, loading, error } = useSelector((state: RootState) => state.admin); // Проверяем правильность имен полей
 
   useEffect(() => {
     dispatch(fetchAllUsers());
@@ -16,7 +16,7 @@ const UserList: React.FC = () => {
     dispatch(deleteUser(userId));
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>; // Используем loading вместо isLoading
   if (error) return <p>{error}</p>;
 
   return (

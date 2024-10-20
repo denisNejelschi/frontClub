@@ -23,7 +23,9 @@ const adminSlice = createSlice({
   name: "admin",
   initialState,
   reducers: {
-    // Синхронные действия могут быть добавлены здесь при необходимости
+    setUsers(state, action: PayloadAction<IUser[]>) {
+      state.users = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // Обрабатываем асинхронные действия для fetchAllUsers
@@ -36,8 +38,8 @@ const adminSlice = createSlice({
         state.users = action.payload;
         state.loading = false;
       })
-      .addCase(fetchAllUsers.rejected, (state, action: PayloadAction<any>) => {
-        state.error = action.payload;
+      .addCase(fetchAllUsers.rejected, (state, action) => {
+        state.error = action.error.message || "Failed to fetch users.";
         state.loading = false;
       })
 
@@ -50,8 +52,8 @@ const adminSlice = createSlice({
         state.users = state.users.filter((user) => user.id !== action.payload);
         state.loading = false;
       })
-      .addCase(deleteUser.rejected, (state, action: PayloadAction<any>) => {
-        state.error = action.payload;
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.error = action.error.message || "Failed to delete user.";
         state.loading = false;
       })
 
@@ -66,8 +68,8 @@ const adminSlice = createSlice({
         );
         state.loading = false;
       })
-      .addCase(updateUser.rejected, (state, action: PayloadAction<any>) => {
-        state.error = action.payload;
+      .addCase(updateUser.rejected, (state, action) => {
+        state.error = action.error.message || "Failed to update user.";
         state.loading = false;
       })
 
@@ -80,8 +82,8 @@ const adminSlice = createSlice({
         state.user = action.payload;
         state.loading = false;
       })
-      .addCase(getUser.rejected, (state, action: PayloadAction<any>) => {
-        state.error = action.payload;
+      .addCase(getUser.rejected, (state, action) => {
+        state.error = action.error.message || "Failed to fetch user.";
         state.loading = false;
       })
 
@@ -94,12 +96,13 @@ const adminSlice = createSlice({
         state.users.push(action.payload);
         state.loading = false;
       })
-      .addCase(createUser.rejected, (state, action: PayloadAction<any>) => {
-        state.error = action.payload;
+      .addCase(createUser.rejected, (state, action) => {
+        state.error = action.error.message || "Failed to create user.";
         state.loading = false;
       });
   },
 });
 
 // Экспортируем редьюсер
+export const { setUsers } = adminSlice.actions;
 export default adminSlice.reducer;

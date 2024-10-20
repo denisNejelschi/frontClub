@@ -12,12 +12,15 @@ import { useAppDispatch } from "./app/hooks";
 import { getUserWithToken } from "./components/auth/features/authAction";
 import ActivityDetail from "./components/activityDetail/ActivityDetail";
 import { Footer } from "./components/footer/Footer";
-import ProjectCreators from "./components/projectCreators/ProjectCreators";
-import RegistrationConfirmed from "./components/registrationConfirm/RegistrationConfirmed";
-import AdminPanel from "./components/adminPanel/AdminPanel";
-import UserList from "./components/adminPanel/UserList";
-import NewsList from "./components/news/NewsList";
-import School from "./components/school/School";
+import ProjectCreators from "./components/projectCreators/ProjectCreators.tsx";
+import DashBoard from "./components/dashBoard/DashBoard.tsx";
+import AdminPanel from "./components/adminPanel/AdminPanel.tsx";
+import UserList from "./components/adminPanel/UserList.tsx";
+import NewsList from "./components/news/NewsList.tsx";
+import RegistrationConfirmed from "./components/registrationConfirm/RegistrationConfirmed.tsx";
+import School from "./components/school/School.tsx";
+
+
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -36,11 +39,24 @@ const App = () => {
           {/* Основной layout */}
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
-            <Route path="homePage" element={<HomePage />} />
-            <Route path="activityList" element={<ActivityList />} />
-            <Route path="activityList/addActivity" element={<AddActivityForm onSuccess={() => {}} />} />
-            <Route path="activityList/:id" element={<ActivityDetail />} />
-            <Route path="school" element={<ProtectedRoute component={<School />} />} />
+            <Route path="/homePage" element={<HomePage />} />
+            <Route path="/activityList" element={<ActivityList />} />
+            <Route
+              path="/activityList/addActivity"
+              element={
+                <AddActivityForm
+                  onSuccess={function (): void {
+                    throw new Error("Function not implemented.");
+                  }}
+                />
+              }
+            />
+            <Route path="/activityList/:id" element={<ActivityDetail />} />
+            <Route path="/dashBoard" element={<DashBoard />} />
+            <Route
+              path="/school"
+              element={<ProtectedRoute element={<School />} />}
+            />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="projectCreators" element={<ProjectCreators />} />
@@ -48,11 +64,10 @@ const App = () => {
           </Route>
 
           {/* Панель администратора с защищенными маршрутами */}
-          <Route path="/admin" element={<ProtectedRoute component={<AdminPanel />} />}>
+          <Route path="/admin" element={<ProtectedRoute element={<AdminPanel />} />}>
             <Route path="users" element={<UserList />} />
             <Route path="activities" element={<ActivityList />} />
             <Route path="news" element={<NewsList />} />
-            <Route path="*" element={<h1>Error 404 😵</h1>} />
           </Route>
         </Routes>
         
