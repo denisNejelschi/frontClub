@@ -16,6 +16,7 @@ import { Footer } from "./components/footer/Footer";
 
 import ProjectCreators from "./components/projectCreators/ProjectCreators.tsx";
 import DashBoard from "./components/dashBoard/DashBoard.tsx";
+import RegistrationConfirmed from "./components/registrationConfirm/RegistrationConfirmed.tsx";
 
 
 
