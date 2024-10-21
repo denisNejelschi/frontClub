@@ -103,6 +103,7 @@ const adminSlice = createSlice({
   },
 });
 
+// Экспортируем асинхронные действия
 // Экспортируем редьюсер
 export const { setUsers } = adminSlice.actions;
 export default adminSlice.reducer;

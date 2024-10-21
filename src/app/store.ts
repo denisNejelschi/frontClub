@@ -1,10 +1,12 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import authSlice from "../components/auth/features/authSlice";
 import reduxActivitiesSlice from "../components/auth/reduxActivities/reduxActivitiesSlice";
+import adminReducer from '../components/adminPanel/adminSlice';
 
 
 export const store = configureStore({
   reducer: {
+    admin: adminReducer,
     reduxActivities: reduxActivitiesSlice.reducer,
     user: authSlice.reducer,
   },
@@ -18,3 +20,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+export default store;

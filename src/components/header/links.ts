@@ -24,7 +24,7 @@ export const links = (isAuthenticated: boolean, isAdmin: boolean): ILink[] => {
   );
 
 
-    // Если пользователь администратор, добавляем ссылку на панель администратора
+    // Ссылки для администратора
     if (isAdmin) {
       baseLinks.push({
         pathname: '/admin',

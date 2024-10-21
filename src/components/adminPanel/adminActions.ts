@@ -10,10 +10,10 @@ interface LoginPayload {
 
 // Асинхронное действие для входа
 export const login = createAsyncThunk(
-  "admin/login",
+  "/api/admin/login",
   async (payload: LoginPayload, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/admin/login", payload); // Ваш API эндпоинт для логина администратора
+      const response = await axios.post("/api/auth/login", payload); // Ваш API эндпоинт для логина администратора
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);

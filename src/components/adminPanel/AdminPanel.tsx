@@ -16,24 +16,6 @@ const AdminPanel: React.FC = () => {
           <li>
             <Link to="/admin/news">Manage News</Link>
           </li>
-          <li>
-            <Link to="/admin/comments">Manage Comments</Link>
-          </li>
-          <li>
-            <Link to="/admin/roles">Manage Roles</Link>
-          </li>
-          <li>
-            <Link to="/admin/permissions">Manage Permissions</Link>
-          </li>
-          <li>
-            <Link to="/admin/activitiesTypes">Manage Activities Types</Link>
-          </li>
-          <li>
-            <Link to="/admin/activitiesStatuses">Manage Activities Statuses</Link>
-          </li>
-          <li>
-            <Link to="/admin/activitiesCategories">Manage Activities Categories</Link>
-          </li>
         </ul>
       </nav>
       
