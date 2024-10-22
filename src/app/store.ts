@@ -1,6 +1,6 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import authSlice from "../components/auth/features/authSlice";
-import reduxActivitiesSlice from "../components/auth/reduxActivities/reduxActivitiesSlice";
+import authSlice from "../components/features/auth/authSlice";
+import reduxActivitiesSlice from "../components/reduxActivities/reduxActivitiesSlice";
 import adminReducer from '../components/adminPanel/adminSlice';
 
 

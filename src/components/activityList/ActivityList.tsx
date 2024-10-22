@@ -6,7 +6,7 @@ import buttonStyles from "../button/button.module.css";
 import SearchBar from "../searchBar/SearchBar";
 import ScrollToTopButton from "../scrollToTopButton/ScrollToTopButton";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { getActivities } from "../auth/reduxActivities/reduxActivitiesAction";
+import { getActivities } from "../reduxActivities/reduxActivitiesAction";
 
 interface IActivity {
   id: number;
